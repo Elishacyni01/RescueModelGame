@@ -2,7 +2,7 @@ PImage []thsr;
 PImage hand, stone, salesman, motor;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
 // PImage [][] player;
-//PImage [] playerIdle, playerMotor, playerCrash;
+// PImage [] playerIdle, playerMotor, playerCrash;
 
 PImage player, playerCrash;
 
@@ -11,6 +11,8 @@ final int GAME_START = 0, GAME_RUN1 = 1, GAME_RUN2 = 2, GAME_WIN = 3, GAME_LOSE_
 int gameState = 0;
 
 float playerX, playerY;
+final int PLAYER_RUN_POSE = 2;
+final int PLAYER_DAMAGE_CONDS = 3;
 
 
 void setup() {
@@ -26,10 +28,18 @@ void setup() {
   gamewin = loadImage("img/gamewin.jpg");
   gamelosetime = loadImage("img/gamelosetime.jpg");
   gamelosebroken = loadImage("img/gamelosebroken.jpg");
+  
+  player = loadImage("img/player.jpg");
 
-  
+  /*
   // Load PImage[][] player
-  
+  player = new PImage[PLAYER_RUN_POSE][PLAYER_DAMAGE_CONDS];
+  for(int i = 0; i < player.length; i++){
+    for(int j = 0; j < player[i].length; j++){
+      player[i][j] = loadImage("img/players/player" + i + "/player" + i + "_" + j + ".jpg");
+    }
+  }
+  */
 }
 
 void draw() {
@@ -59,6 +69,13 @@ void draw() {
         
         break;
     }
+}
+
+boolean isHit(float ax, float ay, float aw, float ah, float bx, float by, float bw, float bh){
+  return  ax + aw > bx &&    // a right edge past b left
+        ax < bx + bw &&    // a left edge past b right
+        ay + ah > by &&    // a top edge past b bottom
+        ay < by + bh;
 }
 
 void keyPressed(){
