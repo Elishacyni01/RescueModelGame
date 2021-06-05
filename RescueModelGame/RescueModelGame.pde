@@ -1,6 +1,6 @@
 PImage []thsr;
 PImage thsr0;
-PImage hand, stone, salesman, motor;
+PImage hand, stone, salesman, motor, road;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
 PImage restartHovered,restartNormal,startHovered,startNormal,row,sky;
 PImage [][] playerImage;
@@ -10,7 +10,7 @@ PImage playerCrash, playerIdle;
 
 
 final int GAME_START = 0, GAME_RUN1 = 1, GAME_RUN2 = 2, GAME_WIN = 3, GAME_LOSE_TIME = 4, GAME_LOSE_BROKEN = 5;
-int gameState = 2;
+int gameState = 0;
 
 final int START_BUTTON_WIDTH = 200;
 final int START_BUTTON_HEIGHT = 100;
@@ -22,6 +22,10 @@ final int RESTART_BUTTON_Y = 350;
 float playerX, playerY;
 final int PLAYER_RUN_POSE = 2;
 final int PLAYER_DAMAGE_CONDS = 3;
+
+final int BAR_HEIGHT = 60;
+int barWidth = 60;
+
 
 boolean rightState = false;
 boolean upState = false;
@@ -47,6 +51,7 @@ void setup() {
   startNormal = loadImage("img/startNormal.png");
   row = loadImage("img/row.png");
   sky = loadImage("img/sky.jpg");
+  road = loadImage("img/road.png");
   playerIdle = loadImage("img/playerIdle.png");
   
   
@@ -97,22 +102,37 @@ void draw() {
     
       image(gamerun1, 0, 0);
       image(thsr0, 100, 150);
-      noCursor();
+      //noCursor();
       
       // Restrict hand area
       
-      if(mouseX < 50){
-        mouseX = 50;
-      }else if(mouseX > 400){
-        mouseX= 400;
+      if(mouseX < 170){
+        mouseX = 170;
+        barWidth ++;
+      }else if(mouseX > 520){
+        mouseX= 520;
+        barWidth ++;
       }
-      if(mouseY < 100){
-        mouseY = 100;
-      }else if(mouseY > 300){
-        mouseY= 300;
+      if(mouseY < 220){
+        mouseY = 220;
+        barWidth ++;
+      }else if(mouseY > 420){
+        mouseY= 420;
+        barWidth ++;
       }
       
-      image(hand, mouseX, mouseY);
+      image(hand, mouseX - 120 , mouseY - 120);
+      
+      // Bar
+      fill(#FFFF00);
+      strokeWeight(5);
+      stroke(#4d3900);
+      rect(5, 420, barWidth, BAR_HEIGHT, 7);
+      
+      // Bar Progress
+      if(barWidth > width - 10){
+        gameState = GAME_RUN2;
+      }
     break;
 
     case GAME_RUN2: // Start run
@@ -120,6 +140,12 @@ void draw() {
       // Background
       image(sky, 0, 0);
       image(row, 0, 0);
+      
+      for(int i=0; i < 15; i++){
+        for(int j=0; j < 3; j++){
+          image(road, i * 100, 180 + j*100);
+        }
+      }
       
       // Player
       

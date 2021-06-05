@@ -3,7 +3,7 @@ class Player{
   float w = 100, h = 100;
   int row;
   final float PLAYER_INIT_X = 0;
-  final float PLAYER_INIT_Y = 160;
+  final float PLAYER_INIT_Y = 380;
 
   void update(){
     //PImage playerDisplay = playerIdle;
@@ -20,13 +20,17 @@ class Player{
         t++;
       }
     }
-    */
-      
+    
+    
+    //while(isHit == false){
+      // switch image between player0&1
+    
+    
     if(upState){
       
       // if the player aren't at the top line
       if(row > 1){
-        y -= 100;
+        y -= 110;
         upState = false;
       }
       
@@ -34,12 +38,13 @@ class Player{
       
       // if the player aren't at the bottom line
       if(row < 3){
-        y += 100;
+        y += 110;
         downState = false;
       }
     
     }
-    image(playerIdle, x, y);
+    */
+    //image(playerIdle, x, y);
   }
   
   Player(){
