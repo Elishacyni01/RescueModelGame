@@ -3,7 +3,7 @@ PImage thsr0;
 PImage hand, stone, salesman, motor;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
 PImage restartHovered,restartNormal,startHovered,startNormal,row,sky;
-PImage [][] player;
+PImage [][] playerImage;
 // PImage [] playerIdle, playerMotor, playerCrash;
 
 PImage playerCrash;
@@ -27,6 +27,7 @@ boolean rightState = false;
 boolean upState = false;
 boolean downState = false;
 
+Player[][] player;
 
 void setup() {
   size(640, 480, P2D);
@@ -52,15 +53,18 @@ void setup() {
 
   
   // Load PImage[][] player
-  player = new PImage[PLAYER_RUN_POSE][PLAYER_DAMAGE_CONDS];
-  for(int i = 0; i < player.length; i++){
-    for(int j = 0; j < player[i].length; j++){
-      player[i][j] = loadImage("img/players/player" + i + "/player" + i + "_" + j + ".png");
+  playerImage = new PImage[PLAYER_RUN_POSE][PLAYER_DAMAGE_CONDS];
+  for(int i = 0; i < playerImage.length; i++){
+    for(int j = 0; j < playerImage[i].length; j++){
+      playerImage[i][j] = loadImage("img/players/player" + i + "/player" + i + "_" + j + ".png");
     }
   }
   
   
   thsr0 = loadImage("img/thsr0.jpg");
+  
+  // Initialize Game
+  player = new Player[PLAYER_RUN_POSE][PLAYER_DAMAGE_CONDS];
 }
 
 void draw() {
@@ -117,7 +121,14 @@ void draw() {
       image(row, 0, 0);
       
       // Player
-      player.update();
+      for(int i = 0; i < PLAYER_RUN_POSE; i++){
+        for(int j = 0; j < PLAYER_DAMAGE_CONDS; j++){
+
+        player[i][j].update();
+
+      }
+    }
+      
     
     break;
 

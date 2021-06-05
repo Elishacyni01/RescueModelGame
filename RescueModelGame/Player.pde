@@ -1,9 +1,11 @@
 class Player{
-  final float PLAYER_INIT_X;
-  final float PLAYER_INIT_Y;
+  float x, y;
+  float w = 100, h = 100;
+  final float PLAYER_INIT_X = 0;
+  final float PLAYER_INIT_Y = 160;
 
   void update(){
-    //PImage playerDisplay = playerIdle;
+    PImage playerDisplay = player[0][0];
     
     if(rightState){
       for(int i = 0; i < 120; i++){
@@ -13,6 +15,14 @@ class Player{
           image(player[1][0],0,165);
         }
       }
+    }else if(upState){
+    }else if(downState){
     }
+    image(playerDisplay, x, y);
+  }
+  
+  Player(){
+    x = PLAYER_INIT_X;
+    y = PLAYER_INIT_Y;
   }
 }
