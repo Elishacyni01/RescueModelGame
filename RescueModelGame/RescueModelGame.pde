@@ -88,7 +88,7 @@ void draw() {
     case GAME_RUN1: // Rubbing model
       image(gamerun1, 0, 0);
       image(thsr0, 100, 150);
-      
+      noCursor();
       if(mouseX < 50){
         mouseX = 50;
       }else if(mouseX > 400){
