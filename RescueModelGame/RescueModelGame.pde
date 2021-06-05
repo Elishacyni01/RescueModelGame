@@ -6,11 +6,11 @@ PImage restartHovered,restartNormal,startHovered,startNormal,row,sky;
 PImage [][] playerImage;
 // PImage [] playerIdle, playerMotor, playerCrash;
 
-PImage playerCrash;
+PImage playerCrash, playerIdle;
 
 
 final int GAME_START = 0, GAME_RUN1 = 1, GAME_RUN2 = 2, GAME_WIN = 3, GAME_LOSE_TIME = 4, GAME_LOSE_BROKEN = 5;
-int gameState = 0;
+int gameState = 2;
 
 final int START_BUTTON_WIDTH = 200;
 final int START_BUTTON_HEIGHT = 100;
@@ -27,7 +27,7 @@ boolean rightState = false;
 boolean upState = false;
 boolean downState = false;
 
-Player[][] player;
+Player player;
 
 void setup() {
   size(640, 480, P2D);
@@ -38,7 +38,6 @@ void setup() {
   motor = loadImage("img/motor.jpg");
   gamestart = loadImage("img/gamestart.jpg");
   gamerun1 = loadImage("img/gamerun1.jpg");
-  
   gamewin = loadImage("img/gamewin.jpg");
   gamelosetime = loadImage("img/gamelosetime.jpg");
   gamelosebroken = loadImage("img/gamelosebroken.jpg");
@@ -48,6 +47,7 @@ void setup() {
   startNormal = loadImage("img/startNormal.png");
   row = loadImage("img/row.png");
   sky = loadImage("img/sky.jpg");
+  playerIdle = loadImage("img/playerIdle.png");
   
   
 
@@ -64,7 +64,7 @@ void setup() {
   thsr0 = loadImage("img/thsr0.jpg");
   
   // Initialize Game
-  player = new Player[PLAYER_RUN_POSE][PLAYER_DAMAGE_CONDS];
+  player = new Player();
 }
 
 void draw() {
@@ -116,18 +116,17 @@ void draw() {
     break;
 
     case GAME_RUN2: // Start run
+    
       // Background
       image(sky, 0, 0);
       image(row, 0, 0);
       
       // Player
-      for(int i = 0; i < PLAYER_RUN_POSE; i++){
-        for(int j = 0; j < PLAYER_DAMAGE_CONDS; j++){
+      
 
-        player[i][j].update();
+      player.update();
 
-      }
-    }
+     
       
     
     break;
