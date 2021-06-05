@@ -3,14 +3,14 @@ PImage thsr0;
 PImage hand, stone, salesman, motor;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
 PImage restartHovered,restartNormal,startHovered,startNormal,row,sky;
-// PImage [][] player;
+PImage [][] player;
 // PImage [] playerIdle, playerMotor, playerCrash;
 
-PImage player, playerCrash;
+PImage playerCrash;
 
 
 final int GAME_START = 0, GAME_RUN1 = 1, GAME_RUN2 = 2, GAME_WIN = 3, GAME_LOSE_TIME = 4, GAME_LOSE_BROKEN = 5;
-int gameState = 0;
+int gameState = 2;
 
 final int START_BUTTON_WIDTH = 200;
 final int START_BUTTON_HEIGHT = 100;
@@ -22,6 +22,10 @@ final int RESTART_BUTTON_Y = 350;
 float playerX, playerY;
 final int PLAYER_RUN_POSE = 2;
 final int PLAYER_DAMAGE_CONDS = 3;
+
+boolean rightState = false;
+boolean upState = false;
+boolean downState = false;
 
 
 void setup() {
@@ -41,20 +45,20 @@ void setup() {
   restartNormal = loadImage("img/restartNormal.png");
   startHovered = loadImage("img/startHovered.png");
   startNormal = loadImage("img/startNormal.png");
-  row = loadImage("img/row.jpg");
+  row = loadImage("img/row.png");
   sky = loadImage("img/sky.jpg");
   
-  player = loadImage("img/player.jpg");
+  
 
-  /*
+  
   // Load PImage[][] player
   player = new PImage[PLAYER_RUN_POSE][PLAYER_DAMAGE_CONDS];
   for(int i = 0; i < player.length; i++){
     for(int j = 0; j < player[i].length; j++){
-      player[i][j] = loadImage("img/players/player" + i + "/player" + i + "_" + j + ".jpg");
+      player[i][j] = loadImage("img/players/player" + i + "/player" + i + "_" + j + ".png");
     }
   }
-  */
+  
   
   thsr0 = loadImage("img/thsr0.jpg");
 }
@@ -85,9 +89,13 @@ void draw() {
     
     break;
         
-    case GAME_RUN1: // Rubbing model
+    case GAME_RUN1:  // Rubbing model
+    
       image(gamerun1, 0, 0);
       image(thsr0, 100, 150);
+      noCursor();
+      
+      // Restrict hand area
       
       if(mouseX < 50){
         mouseX = 50;
@@ -106,6 +114,7 @@ void draw() {
     case GAME_RUN2: // start run
       image(sky, 0, 0);
       image(row, 0, 0);
+      image(player[0][1], 0, 160);
     
     break;
 
@@ -114,7 +123,7 @@ void draw() {
       restart();
     break;
         
-    case GAME_LOSE_TIME: //time over
+    case GAME_LOSE_TIME: // time over
       image(gamelosetime, 0, 0);
       restart();
     break;
@@ -152,5 +161,36 @@ boolean isHit(float ax, float ay, float aw, float ah, float bx, float by, float 
         ay < by + bh;
 }
 
+
+  
 void keyPressed(){
+  if(key==CODED){
+    switch(keyCode){
+      case RIGHT:
+      rightState = true;
+      break;
+      case UP:
+      upState = true;
+      break;
+      case DOWN:
+      downState = true;
+      break;
+    }
   }
+}
+
+void keyReleased(){
+  if(key==CODED){
+    switch(keyCode){
+      case RIGHT:
+      rightState = false;
+      break;
+      case UP:
+      upState = false;
+      break;
+      case DOWN:
+      downState = false;
+      break;
+    }
+  }
+}
