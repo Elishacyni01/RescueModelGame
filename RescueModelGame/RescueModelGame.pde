@@ -10,7 +10,7 @@ PImage playerCrash;
 
 
 final int GAME_START = 0, GAME_RUN1 = 1, GAME_RUN2 = 2, GAME_WIN = 3, GAME_LOSE_TIME = 4, GAME_LOSE_BROKEN = 5;
-int gameState = 2;
+int gameState = 0;
 
 final int START_BUTTON_WIDTH = 200;
 final int START_BUTTON_HEIGHT = 100;
@@ -111,10 +111,13 @@ void draw() {
       image(hand, mouseX, mouseY);
     break;
 
-    case GAME_RUN2: // start run
+    case GAME_RUN2: // Start run
+      // Background
       image(sky, 0, 0);
       image(row, 0, 0);
-      image(player[0][1], 0, 160);
+      
+      // Player
+      player.update();
     
     break;
 
