@@ -1,5 +1,5 @@
 PImage []thsr;
-PImage thsr0;
+PImage thsr0,thsr1,thsr2,thsr3;
 PImage hand, stone, salesman, motor, road;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
 PImage restartHovered,restartNormal,startHovered,startNormal,row,sky;
@@ -7,7 +7,7 @@ PImage [][] playerImage;
 // PImage [] playerIdle, playerMotor, playerCrash;
 
 PImage playerCrash, playerIdle;
-
+PFont font;
 
 final int GAME_START = 0, GAME_RUN1 = 1, GAME_RUN2 = 2, GAME_WIN = 3, GAME_LOSE_TIME = 4, GAME_LOSE_BROKEN = 5;
 int gameState = 0;
@@ -22,10 +22,14 @@ final int RESTART_BUTTON_Y = 350;
 float playerX, playerY;
 final int PLAYER_RUN_POSE = 2;
 final int PLAYER_DAMAGE_CONDS = 3;
+int playerRow;
 
 final int BAR_HEIGHT = 60;
 int barWidth = 60;
 
+final int GAME_INIT_TIMER = 7200;
+int gameTimer = GAME_INIT_TIMER;
+final float CLOCK_BONUS_SECONDS = 15f;
 
 boolean rightState = false;
 boolean upState = false;
@@ -54,9 +58,10 @@ void setup() {
   road = loadImage("img/road.png");
   playerIdle = loadImage("img/playerIdle.png");
   
-  
+  font = createFont("font/font.ttf", 56);
+  textFont(font);
 
-  
+
   // Load PImage[][] player
   playerImage = new PImage[PLAYER_RUN_POSE][PLAYER_DAMAGE_CONDS];
   for(int i = 0; i < playerImage.length; i++){
@@ -67,10 +72,17 @@ void setup() {
   
   
   thsr0 = loadImage("img/thsr0.jpg");
+  thsr1 = loadImage("img/thsr1.jpg");
+  thsr2 = loadImage("img/thsr2.jpg");
+  thsr3 = loadImage("img/thsr3.jpg");
+  
   
   // Initialize Game
   player = new Player();
+  gameTimer = GAME_INIT_TIMER;
 }
+
+
 
 void draw() {
   
@@ -101,7 +113,19 @@ void draw() {
     case GAME_RUN1:  // Rubbing model
     
       image(gamerun1, 0, 0);
+      
+      if(barWidth <= 200){
       image(thsr0, 100, 150);
+      }
+      if(barWidth <= 450 && barWidth > 200){
+      image(thsr1, 100, 150);
+      }
+      if(barWidth <= 600 && barWidth > 450){
+      image(thsr2, 100, 150);
+      }
+      if(barWidth <= 640 && barWidth > 600){
+      image(thsr3, 100, 150);
+      }
       //noCursor();
       
       // Restrict hand area
@@ -125,7 +149,7 @@ void draw() {
       
       // Bar
       fill(#FFFF00);
-      strokeWeight(5);
+      strokeWeight(3);
       stroke(#4d3900);
       rect(5, 420, barWidth, BAR_HEIGHT, 7);
       
@@ -133,7 +157,16 @@ void draw() {
       if(barWidth > width - 10){
         gameState = GAME_RUN2;
       }
+      
+      // Timer
+
+    gameTimer --;
+    if(gameTimer <= 0) gameState = GAME_LOSE_TIME;
+    drawTimerUI();
+    
     break;
+    
+    
 
     case GAME_RUN2: // Start run
     
@@ -152,8 +185,10 @@ void draw() {
 
       player.update();
 
-     
-      
+    // Timer
+    gameTimer --;
+    if(gameTimer <= 0) gameState = GAME_LOSE_TIME;
+    drawTimerUI();  
     
     break;
 
@@ -200,6 +235,42 @@ boolean isHit(float ax, float ay, float aw, float ah, float bx, float by, float 
         ay < by + bh;
 }
 
+//mm:ss format
+void drawTimerUI(){
+  textSize(56);
+  String timeString = convertFramesToTimeString(gameTimer);
+  textAlign(RIGHT, TOP);
+  
+  // Time Text Shadow Effect
+  fill(0, 120);
+  text(timeString, 623, 3);
+  
+  // Actual Time Text
+  color timeTextColor = getTimeTextColor(gameTimer);
+  fill(timeTextColor);
+  text(timeString, 620, 0);
+}
+void addTime(float seconds){
+    gameTimer += seconds * 4 * 15;          
+}
+
+String convertFramesToTimeString(int frames){
+  String mm=nf(floor(floor(frames/60)/60),2);
+  String ss=nf(floor(frames/60)%60,2);
+  return mm+":"+ss;  
+}
+
+color getTimeTextColor(int frames){  
+  int min = floor(frames / (60 * 60));
+  int sec = (floor(frames / 60)) % 60;
+  
+  if(min >= 2){return #00ffff;
+  }else if(min == 1){return #000000;
+  }else if(min == 0 && sec <= 59 && sec >= 30){return #ffcc00;
+  }else if(min == 0 && sec <= 29 && sec >= 10){return #ff6600;
+  }else {return #000000;} 
+  
+}
 
   
 void keyPressed(){
