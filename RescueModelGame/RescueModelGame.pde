@@ -251,7 +251,7 @@ void drawTimerUI(){
   text(timeString, 620, 0);
 }
 void addTime(float seconds){
-    gameTimer += seconds * 4 * 15;          
+  gameTimer += seconds * 4 * 15;          
 }
 
 String convertFramesToTimeString(int frames){
