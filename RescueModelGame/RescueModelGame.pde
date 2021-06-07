@@ -169,8 +169,6 @@ void draw() {
     
     break;
     
-    
-
     case GAME_RUN2: // Start run
     
       // Background
@@ -184,11 +182,16 @@ void draw() {
       
       // Life
       for(int i = 0; i < player.health; i++){
-        int f = floor((i+1)/2);
-        image(lifeHalf, 15 + i/2*70, 15, 50, 40);
-        image(life, 15 + f/2*70, 15, 50, 40);
+        int f = floor((i+1)/2) - 1; // full heart num
+        int h = floor(i/2); // half heart num
+        image(lifeHalf, 15 + h*70, 15, 50, 40);
+        image(life, 15 + f*70, 15, 50, 40);
       }
       println(player.health);
+      
+      if(player.health == 0){
+        gameState = GAME_LOSE_BROKEN;
+      }
       
       // Player
       player.update();
@@ -302,12 +305,14 @@ void keyPressed(){
     if(key=='t'){
       gameTimer -= 180;
     }
-}
     if(key=='r'){
       player.health--;
     }
   }
 }
+
+
+
 
 void keyReleased(){
   if(key==CODED){
