@@ -2,27 +2,52 @@ class Player{
   float x, y;
   float w = 100, h = 100;
   int row;
-  final float PLAYER_INIT_X = 0;
+  final float PLAYER_INIT_X = 30;
   final float PLAYER_INIT_Y = 380;
   float frame;
   int indexStatus = 0;
   int indexRunPose = 0;
+  float speed = 5;
 
   void update(){
     //PImage playerDisplay = playerIdle;
+    image(playerIdle, x, y);
     // switch image between player0&1
+    
     if(rightState){
-      if(frame % 15 ==0){
+      if(frame % 15 == 0){
+        roadSpeed -= speed;
         // switch image
-        if(indexRunPose == 0){
-          indexRunPose = 1;
+        switch (indexRunPose) {
+          case 0:
+            indexRunPose = 1;
+            break;
+          case 1:
+            indexRunPose = 0;
+            break;
         }
-        if(indexRunPose == 1){
-          indexRunPose = 0;
-        }
-        image(playerImage[indexStatus][indexRunPose], x, y);
       }
+      image(playerImage[indexStatus][indexRunPose], x, y);
     }
+    
+    if(upState){
+      if(y == 180){
+        y = 180;
+      }else{
+        y -= h;
+      }
+      upState = false;
+    }
+    
+    if(downState){
+      if(y == height - h){
+        y = height - h;
+      }else{
+        y += h;
+      }
+      downState = false;
+    }
+    
     frame ++;
     
     /*

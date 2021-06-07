@@ -27,6 +27,8 @@ int playerRow;
 final int BAR_HEIGHT = 60;
 int barWidth = 60;
 
+float roadSpeed = 0;
+
 final int GAME_INIT_TIMER = 7200;
 int gameTimer = GAME_INIT_TIMER;
 final float CLOCK_BONUS_SECONDS = 15f;
@@ -56,7 +58,7 @@ void setup() {
   row = loadImage("img/row.png");
   sky = loadImage("img/sky.jpg");
   road = loadImage("img/road.png");
-  playerIdle = loadImage("img/playerIdle.png");
+  playerIdle = loadImage("img/players/playerIdle.png");
   
   font = createFont("font/font.ttf", 56);
   textFont(font);
@@ -66,7 +68,7 @@ void setup() {
   playerImage = new PImage[PLAYER_STATUS][PLAYER_RUN_POSE];
   for(int i = 0; i < playerImage.length; i++){
     for(int j = 0; j < playerImage[i].length; j++){
-      playerImage[i][j] = loadImage("img/players/player" + i + "/player" + i + "_" + j + ".png");
+      playerImage[i][j] = loadImage("img/players/player" + i + "_" + j + ".png");
     }
   }
   
@@ -173,7 +175,7 @@ void draw() {
       
       for(int i=0; i < 15; i++){
         for(int j=0; j < 3; j++){
-          image(road, i * 100, 180 + j*100);
+          image(road, roadSpeed + i * 100, 180 + j*100);
         }
       }
       
