@@ -9,6 +9,7 @@ class Player{
   int indexRunPose = 0;
   float speed = 5;
   boolean playerIdleAppear = true;
+  int health = 10;
 
   void update(){
     //PImage playerDisplay = playerIdle;
@@ -55,44 +56,6 @@ class Player{
     }
     
     frame ++;
-    
-    /*
-    if(rightState){
-      for(int i = 0; i < 120; i++){
-        float t = 0;
-        if(t % 2 == 0){
-          image(playerImage[0][0], x, y);
-        }else if(t % 2 == 1){
-          image(playerImage[1][0], x, y);
-        }
-        t++;
-      }
-    }
-    
-    
-    //while(isHit == false){
-      // switch image between player0&1
-    
-    
-    if(upState){
-      
-      // if the player aren't at the top line
-      if(row > 1){
-        y -= 110;
-        upState = false;
-      }
-      
-    }else if(downState){
-      
-      // if the player aren't at the bottom line
-      if(row < 3){
-        y += 110;
-        downState = false;
-      }
-    
-    }
-    */
-    //image(playerIdle, x, y);
   }
   
   
