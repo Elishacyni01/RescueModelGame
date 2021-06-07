@@ -90,7 +90,10 @@ void initGame(){
   gameTimer = GAME_INIT_TIMER;
 }
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> f25c8e38730eb85bf18d0b01143ac07ef5eaa6f9
 void draw() {
   
   switch (gameState) {
