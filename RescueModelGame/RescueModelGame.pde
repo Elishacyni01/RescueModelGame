@@ -1,8 +1,8 @@
 PImage []thsr;
 PImage thsr0,thsr1,thsr2,thsr3;
-PImage hand, stone, salesman, motor, road;
+PImage hand, stone, salesman, motor, road, life, lifeHalf;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
-PImage restartHovered,restartNormal,startHovered,startNormal,row,sky;
+PImage restartHovered, restartNormal, startHovered, startNormal, row, sky;
 PImage [][] playerImage;
 // PImage [] playerIdle, playerMotor, playerCrash;
 
@@ -58,6 +58,8 @@ void setup() {
   row = loadImage("img/row.png");
   sky = loadImage("img/sky.jpg");
   road = loadImage("img/road.png");
+  life = loadImage("img/life.png");
+  lifeHalf = loadImage("img/lifeHalf.png");
   playerIdle = loadImage("img/players/playerIdle.png");
   
   font = createFont("font/font.ttf", 56);
@@ -83,7 +85,6 @@ void setup() {
   player = new Player();
   gameTimer = GAME_INIT_TIMER;
 }
-
 
 
 void draw() {

@@ -8,13 +8,15 @@ class Player{
   int indexStatus = 0;
   int indexRunPose = 0;
   float speed = 5;
+  boolean playerIdleAppear = true;
 
   void update(){
     //PImage playerDisplay = playerIdle;
-    image(playerIdle, x, y);
+    playerIdleAppear = true;
     // switch image between player0&1
     
     if(rightState){
+      playerIdleAppear = false;
       if(frame % 15 == 0){
         roadSpeed -= speed;
         // switch image
@@ -46,6 +48,10 @@ class Player{
         y += h;
       }
       downState = false;
+    }
+    
+    if(playerIdleAppear == true){
+      image(playerIdle, x, y);
     }
     
     frame ++;
@@ -89,6 +95,8 @@ class Player{
     //image(playerIdle, x, y);
   }
   
+  
+    
   Player(){
     x = PLAYER_INIT_X;
     y = PLAYER_INIT_Y;
