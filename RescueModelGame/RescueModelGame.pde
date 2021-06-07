@@ -10,7 +10,7 @@ PImage playerCrash, playerIdle;
 PFont font;
 
 final int GAME_START = 0, GAME_RUN1 = 1, GAME_RUN2 = 2, GAME_WIN = 3, GAME_LOSE_TIME = 4, GAME_LOSE_BROKEN = 5;
-int gameState = 0;
+int gameState = 2;
 
 final int START_BUTTON_WIDTH = 200;
 final int START_BUTTON_HEIGHT = 100;
@@ -19,9 +19,9 @@ final int START_BUTTON_Y = 300;
 final int RESTART_BUTTON_X = 200;
 final int RESTART_BUTTON_Y = 350;
 
-float playerX, playerY;
+
 final int PLAYER_RUN_POSE = 2;
-final int PLAYER_DAMAGE_CONDS = 3;
+final int PLAYER_STATUS = 3;
 int playerRow;
 
 final int BAR_HEIGHT = 60;
@@ -63,7 +63,7 @@ void setup() {
 
 
   // Load PImage[][] player
-  playerImage = new PImage[PLAYER_RUN_POSE][PLAYER_DAMAGE_CONDS];
+  playerImage = new PImage[PLAYER_STATUS][PLAYER_RUN_POSE];
   for(int i = 0; i < playerImage.length; i++){
     for(int j = 0; j < playerImage[i].length; j++){
       playerImage[i][j] = loadImage("img/players/player" + i + "/player" + i + "_" + j + ".png");
@@ -126,23 +126,20 @@ void draw() {
       if(barWidth <= 640 && barWidth > 600){
       image(thsr3, 100, 150);
       }
-      //noCursor();
+      
+      noCursor();
       
       // Restrict hand area
       
       if(mouseX < 170){
         mouseX = 170;
-        barWidth ++;
       }else if(mouseX > 520){
         mouseX= 520;
-        barWidth ++;
       }
       if(mouseY < 220){
         mouseY = 220;
-        barWidth ++;
       }else if(mouseY > 420){
         mouseY= 420;
-        barWidth ++;
       }
       
       image(hand, mouseX - 120 , mouseY - 120);
@@ -250,6 +247,7 @@ void drawTimerUI(){
   fill(timeTextColor);
   text(timeString, 620, 0);
 }
+
 void addTime(float seconds){
   gameTimer += seconds * 4 * 15;          
 }

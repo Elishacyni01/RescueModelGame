@@ -4,9 +4,26 @@ class Player{
   int row;
   final float PLAYER_INIT_X = 0;
   final float PLAYER_INIT_Y = 380;
+  float frame;
+  int indexStatus = 0;
+  int indexRunPose = 0;
 
   void update(){
     //PImage playerDisplay = playerIdle;
+    // switch image between player0&1
+    if(rightState){
+      if(frame % 15 ==0){
+        // switch image
+        if(indexRunPose == 0){
+          indexRunPose = 1;
+        }
+        if(indexRunPose == 1){
+          indexRunPose = 0;
+        }
+        image(playerImage[indexStatus][indexRunPose], x, y);
+      }
+    }
+    frame ++;
     
     /*
     if(rightState){
