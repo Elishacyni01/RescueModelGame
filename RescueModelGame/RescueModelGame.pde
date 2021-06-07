@@ -80,13 +80,23 @@ void setup() {
   thsr2 = loadImage("img/thsr2.jpg");
   thsr3 = loadImage("img/thsr3.jpg");
   
-  
+  initGame();
+
+}
+
+void initGame(){
   // Initialize Game
   player = new Player();
   gameTimer = GAME_INIT_TIMER;
 }
 
+<<<<<<< HEAD
+=======
 
+<<<<<<< Updated upstream
+=======
+>>>>>>> f25c8e38730eb85bf18d0b01143ac07ef5eaa6f9
+>>>>>>> Stashed changes
 void draw() {
   
   switch (gameState) {
@@ -195,16 +205,19 @@ void draw() {
     case GAME_WIN: 
       image(gamewin, 0, 0);
       restart();
+      initGame();
     break;
         
     case GAME_LOSE_TIME: // time over
       image(gamelosetime, 0, 0);
       restart();
+      initGame();
     break;
         
     case GAME_LOSE_BROKEN: //model broken
       image(gamelosebroken, 0, 0);
       restart();
+      initGame();
     break;
   }
 }
@@ -287,7 +300,11 @@ void keyPressed(){
       downState = true;
       break;
     }
-  }
+  }else{
+    if(key=='t'){
+      gameTimer -= 180;
+    }
+}
 }
 
 void keyReleased(){
