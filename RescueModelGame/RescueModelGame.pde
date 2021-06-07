@@ -90,13 +90,7 @@ void initGame(){
   gameTimer = GAME_INIT_TIMER;
 }
 
-<<<<<<< HEAD
-=======
 
-<<<<<<< Updated upstream
-=======
->>>>>>> f25c8e38730eb85bf18d0b01143ac07ef5eaa6f9
->>>>>>> Stashed changes
 void draw() {
   
   switch (gameState) {
@@ -169,10 +163,9 @@ void draw() {
       }
       
       // Timer
-
-    gameTimer --;
-    if(gameTimer <= 0) gameState = GAME_LOSE_TIME;
-    drawTimerUI();
+      gameTimer --;
+      if(gameTimer <= 0) gameState = GAME_LOSE_TIME;
+      drawTimerUI();
     
     break;
     
@@ -182,7 +175,6 @@ void draw() {
     
       // Background
       image(sky, 0, 0);
-      image(row, 0, 0);
       
       for(int i=0; i < 15; i++){
         for(int j=0; j < 3; j++){
@@ -190,15 +182,21 @@ void draw() {
         }
       }
       
-      // Player
+      // Life
+      for(int i = 0; i < player.health; i++){
+        int f = floor((i+1)/2);
+        image(lifeHalf, 15 + i/2*70, 15, 50, 40);
+        image(life, 15 + f/2*70, 15, 50, 40);
+      }
+      println(player.health);
       
-
+      // Player
       player.update();
 
-    // Timer
-    gameTimer --;
-    if(gameTimer <= 0) gameState = GAME_LOSE_TIME;
-    drawTimerUI();  
+      // Timer
+      gameTimer --;
+      if(gameTimer <= 0) gameState = GAME_LOSE_TIME;
+      drawTimerUI();  
     
     break;
 
@@ -305,6 +303,12 @@ void keyPressed(){
       gameTimer -= 180;
     }
 }
+=======
+    if(key=='r'){
+      player.health--;
+    }
+  }
+>>>>>>> Stashed changes
 }
 
 void keyReleased(){
