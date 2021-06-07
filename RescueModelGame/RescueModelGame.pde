@@ -189,6 +189,7 @@ void draw() {
         image(life, 15 + f/2*70, 15, 50, 40);
       }
       println(player.health);
+      
       // Player
       player.update();
 
