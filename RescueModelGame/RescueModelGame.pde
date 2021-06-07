@@ -299,17 +299,14 @@ void keyPressed(){
       break;
     }
   }else{
-<<<<<<< Updated upstream
     if(key=='t'){
       gameTimer -= 180;
     }
 }
-=======
     if(key=='r'){
       player.health--;
     }
   }
->>>>>>> Stashed changes
 }
 
 void keyReleased(){
