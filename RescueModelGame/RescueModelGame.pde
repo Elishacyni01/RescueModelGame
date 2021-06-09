@@ -1,7 +1,8 @@
 PImage thsr0,thsr1,thsr2,thsr3;
-PImage hand, stone, salesman, motor, road, life, lifeHalf;
+PImage road0, road1, road2;
+PImage hand, salesman, motor, life, lifeHalf, sky, rock;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
-PImage restartHovered, restartNormal, startHovered, startNormal, row, sky;
+PImage restartHovered, restartNormal, startHovered, startNormal;
 PImage [][] playerImage;
 // PImage [] playerIdle, playerMotor, playerCrash;
 
@@ -38,12 +39,13 @@ boolean upState = false;
 boolean downState = false;
 
 Player player;
+Rock[][] rocks;
 
 void setup() {
   size(640, 480, P2D);
   
   hand = loadImage("img/hand.jpg");
-  stone = loadImage("img/stone.jpg");
+  rock = loadImage("img/rock.png");
   salesman = loadImage("img/salesman.jpg");
   motor = loadImage("img/motor.jpg");
   gamestart = loadImage("img/gamestart.jpg");
@@ -55,9 +57,10 @@ void setup() {
   restartNormal = loadImage("img/restartNormal.png");
   startHovered = loadImage("img/startHovered.png");
   startNormal = loadImage("img/startNormal.png");
-  row = loadImage("img/row.png");
   sky = loadImage("img/sky.jpg");
-  road = loadImage("img/road.png");
+  road0 = loadImage("img/road0.png");
+  road1 = loadImage("img/road1.png");
+  road2 = loadImage("img/road2.png");
   life = loadImage("img/life.png");
   lifeHalf = loadImage("img/lifeHalf.png");
   playerIdle = loadImage("img/players/playerIdle.png");
@@ -88,8 +91,32 @@ void initGame(){
   // Initialize Game
   player = new Player();
   gameTimer = GAME_INIT_TIMER;
+  
+  // Initialize Rocks and their positions
+  rocks = new Rock[10][3];
+  
+  for(int i = 0; i < rocks.length; i++){
+    for (int j = 0; j < rocks[i].length; j++) {
+      float newX = ROAD_SIZE * (floor(random(6)) + 4 + i);
+      float newY = 180 + j * ROAD_SIZE;
+      rocks[i][j] = new Rock(newX, newY);
+      /*
+      do{
+        float newX = ROAD_SIZE * (floor(random(6)) + 4);
+        float newY = 180 + j * ROAD_SIZE;
+        rocks[i][j] = new Rock(newX, newY);
+      }while(isExist(rocks[i][0].x, rocks[i][1].x, rocks[i][2].x));
+      */
+    }
+  }
 }
 
+boolean isExist(float positionA, float positionB, float positionC){
+  if (positionA == positionB && positionB == positionC){
+    return true;
+  }
+  return false;
+}
 
 void draw() {
   
@@ -172,9 +199,9 @@ void draw() {
       
       // Road
       for(int i=0; i < 64; i++){
-        for(int j=0; j < 3; j++){
-          image(road, roadSpeed + i * 100, 180 + j*100);
-        }
+        image(road0, roadSpeed + i * 100, 180);
+        image(road1, roadSpeed + i * 100, 280);
+        image(road2, roadSpeed + i * 100, 380);
       }
       
       // Life
@@ -189,7 +216,12 @@ void draw() {
       // Player
       player.update();
       
-      
+      // Rock
+      for(int i = 0; i < rocks.length; i++){
+        for(int j = 0; j < rocks[i].length; j++){
+          rocks[i][j].display();
+        }
+      }
 
       // Timer
       gameTimer --;
