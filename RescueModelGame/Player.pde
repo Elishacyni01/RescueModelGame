@@ -1,24 +1,27 @@
 class Player{
   float x, y;
-  float w = 100, h = 100;
+  float w = ROAD_SIZE, h = ROAD_SIZE;
   int row;
+  
   final float PLAYER_INIT_X = 30;
   final float PLAYER_INIT_Y = 380;
+  
   float frame;
   int indexStatus = 0;
   int indexRunPose = 0;
-  float speed = 5;
-  boolean playerIdleAppear = true;
+  
+  float speed = 15;
   int health = 10;
+  boolean playerIdleAppear = true;
+  
 
   void update(){
-    //PImage playerDisplay = playerIdle;
     playerIdleAppear = true;
     // switch image between player0&1
     
     if(rightState){
       playerIdleAppear = false;
-      if(frame % 15 == 0){
+      if(frame % 10 == 0){
         roadSpeed -= speed;
         // switch image
         switch (indexRunPose) {
@@ -58,7 +61,13 @@ class Player{
     frame ++;
   }
   
-  
+  void hurt(){
+    health--;
+    // PlayerCrash image & move to the other side of rock or car
+    if(health == 0){
+      gameState = GAME_LOSE_BROKEN;
+    }
+  }
     
   Player(){
     x = PLAYER_INIT_X;

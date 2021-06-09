@@ -1,4 +1,3 @@
-PImage []thsr;
 PImage thsr0,thsr1,thsr2,thsr3;
 PImage hand, stone, salesman, motor, road, life, lifeHalf;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
@@ -28,6 +27,7 @@ final int BAR_HEIGHT = 60;
 int barWidth = 60;
 
 float roadSpeed = 0;
+final int ROAD_SIZE = 100;
 
 final int GAME_INIT_TIMER = 7200;
 int gameTimer = GAME_INIT_TIMER;
@@ -121,23 +121,19 @@ void draw() {
     
       image(gamerun1, 0, 0);
       
+      // THSR
       if(barWidth <= 200){
-      image(thsr0, 100, 150);
+        image(thsr0, 100, 150);
+      }else if(barWidth <= 450){
+        image(thsr1, 100, 150);
+      }else if(barWidth <= 600){
+        image(thsr2, 100, 150);
+      }else if(barWidth <= 640){
+        image(thsr3, 100, 150);
       }
-      if(barWidth <= 450 && barWidth > 200){
-      image(thsr1, 100, 150);
-      }
-      if(barWidth <= 600 && barWidth > 450){
-      image(thsr2, 100, 150);
-      }
-      if(barWidth <= 640 && barWidth > 600){
-      image(thsr3, 100, 150);
-      }
-      
-      noCursor();
       
       // Restrict hand area
-      
+      noCursor();
       if(mouseX < 170){
         mouseX = 170;
       }else if(mouseX > 520){
@@ -174,7 +170,8 @@ void draw() {
       // Background
       image(sky, 0, 0);
       
-      for(int i=0; i < 15; i++){
+      // Road
+      for(int i=0; i < 64; i++){
         for(int j=0; j < 3; j++){
           image(road, roadSpeed + i * 100, 180 + j*100);
         }
@@ -189,12 +186,10 @@ void draw() {
       }
       println(player.health);
       
-      if(player.health == 0){
-        gameState = GAME_LOSE_BROKEN;
-      }
-      
       // Player
       player.update();
+      
+      
 
       // Timer
       gameTimer --;
