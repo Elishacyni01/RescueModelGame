@@ -204,15 +204,15 @@ void draw() {
       
       // Road
       for(int i=0; i < 64; i++){
-        image(road0, roadSpeed + i * 100, 180);
-        image(road1, roadSpeed + i * 100, 280);
-        image(road2, roadSpeed + i * 100, 380);
+        image(road0, roadSpeed + i * ROAD_SIZE, 180);
+        image(road1, roadSpeed + i * ROAD_SIZE, 280);
+        image(road2, roadSpeed + i * ROAD_SIZE, 380);
       }
       
       //crossroad
        for(int i=0; i < 1; i++){
-         image(crossroad, roadSpeed + i * 100+2100, 180);
-         image(crossroad, roadSpeed + i * 100+5100, 180);
+         image(crossroad, roadSpeed + (i+20) * ROAD_SIZE, 180);
+         image(crossroad, roadSpeed + (i+50) * ROAD_SIZE, 180);
        }
       
       // Life
