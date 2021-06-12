@@ -13,25 +13,33 @@ class Player{
   float speed = 30;
   int health = 10;
   boolean playerIdleAppear = true;
+  boolean playerCrashAppear = false;
   
+  int hurtTimer = 0;
+  int hurtDuration = 15;
+  boolean playerHurt = false;
 
   void update(){
-    playerIdleAppear = true;
-    // switch image between player0&1
-    
-    if(rightState){
-      playerIdleAppear = false;
-      if(frame % 10 == 0){
-        roadSpeed -= speed;
-        // switch image
-        switch (indexRunPose) {
-          case 0:
-            indexRunPose = 1;
-            break;
-          case 1:
-            indexRunPose = 0;
-            break;
+    speed = 30;
+      playerIdleAppear = true;
+      
+      // switch image between player0&1
+      
+      if(rightState){
+        playerIdleAppear = false;
+        if(frame % 10 == 0){
+          roadSpeed -= speed;
+          // switch image
+          switch (indexRunPose) {
+            case 0:
+              indexRunPose = 1;
+              break;
+            case 1:
+              indexRunPose = 0;
+              break;
+          }
         }
+<<<<<<< Updated upstream
         if(health<=6 && health>3){
           indexStatus = 1;
           }
@@ -39,42 +47,63 @@ class Player{
         if(health<=3){
           indexStatus = 1;
           } 
+=======
+        
+        image(playerImage[indexStatus][indexRunPose], x, y);
+>>>>>>> Stashed changes
       }
-      image(playerImage[indexStatus][indexRunPose], x, y);
-    }
-    
-    if(upState){
-      if(y == 180){
-        y = 180;
-      }else{
-        y -= h;
+      
+      if(upState){
+        if(y == 180){
+          y = 180;
+        }else{
+          y -= h;
+        }
+        upState = false;
       }
-      upState = false;
-    }
-    
-    if(downState){
-      if(y == height - h){
-        y = height - h;
-      }else{
-        y += h;
+      
+      if(downState){
+        if(y == height - h){
+          y = height - h;
+        }else{
+          y += h;
+        }
+        downState = false;
       }
-      downState = false;
-    }
-    
-    if(playerIdleAppear == true){
-      image(playerIdle, x, y);
-    }
+      
+      if(playerIdleAppear == true){
+        image(playerIdle, x, y);
+      }
     
     frame ++;
   }
 
   
   void hurt(){
-    health--;
+    // health -- ;
+    
     // PlayerCrash image & move to the other side of rock or car
+    hurtTimer = hurtDuration;
+    
+    if(hurtTimer > 0){
+      speed = 0;
+      playerIdleAppear = false;
+      playerCrashAppear = true;
+      hurtTimer --;
+      
+    }
+    println(hurtTimer);
+    if(hurtTimer == 0){
+        playerCrashAppear = false;
+      }
+    if(playerCrashAppear == true){
+        image(playerCrash0, x, y);
+      }
+      
     if(health == 0){
       gameState = GAME_LOSE_BROKEN;
     }
+   
   }
   
   void reduceTime(){
@@ -85,6 +114,6 @@ class Player{
   Player(){
     x = PLAYER_INIT_X;
     y = PLAYER_INIT_Y;
-    row = (int) ((y - PLAYER_INIT_Y) / 100) + 1;
+    playerHurt = false;
   }
 }

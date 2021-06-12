@@ -233,6 +233,8 @@ void draw() {
         if(rocks[i].isAlive){
           rocks[i].display();
           rocks[i].checkCollision(player);
+        }else{
+          player.hurt();
         }
       }
       
