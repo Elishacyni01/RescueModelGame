@@ -10,7 +10,7 @@ PImage playerCrash, playerIdle;
 PFont font;
 
 final int GAME_START = 0, GAME_RUN1 = 1, GAME_RUN2 = 2, GAME_WIN = 3, GAME_LOSE_TIME = 4, GAME_LOSE_BROKEN = 5;
-int gameState = 2;
+int gameState = 0;
 
 final int START_BUTTON_WIDTH = 200;
 final int START_BUTTON_HEIGHT = 100;
@@ -45,7 +45,7 @@ Rock rocks;
 void setup() {
   size(640, 480, P2D);
   
-  hand = loadImage("img/hand.jpg");
+  hand = loadImage("img/hand.png");
   rock = loadImage("img/rock.png");
   salesman = loadImage("img/salesman.jpg");
   motor = loadImage("img/motor.jpg");
