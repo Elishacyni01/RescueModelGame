@@ -1,8 +1,8 @@
 PImage thsr0,thsr1,thsr2,thsr3;
 PImage road0, road1, road2;
-PImage hand, salesman, motor, life, lifeHalf, sky, rock;
+PImage hand, salesman, motor, life, lifeHalf, sky, rock, crossroad;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
-PImage restartHovered, restartNormal, startHovered, startNormal,crossroad;
+PImage restartHovered, restartNormal, startHovered, startNormal;
 PImage [][] playerImage;
 // PImage [] playerIdle, playerMotor, playerCrash;
 
@@ -39,7 +39,8 @@ boolean upState = false;
 boolean downState = false;
 
 Player player;
-Rock[][] rocks;
+//Rock[][] rocks;
+Rock rocks;
 
 void setup() {
   size(640, 480, P2D);
@@ -65,6 +66,7 @@ void setup() {
   lifeHalf = loadImage("img/lifeHalf.png");
   playerIdle = loadImage("img/players/playerIdle.png");
   crossroad = loadImage("img/crossroad.png");
+  
   font = createFont("font/font.ttf", 56);
   textFont(font);
 
@@ -93,22 +95,25 @@ void initGame(){
   gameTimer = GAME_INIT_TIMER;
   
   // Initialize Rocks and their positions
-  rocks = new Rock[10][3];
+  rocks = new Rock(100 + roadSpeed,180);
   
+  
+  /*
   for(int i = 0; i < rocks.length; i++){
     for (int j = 0; j < rocks[i].length; j++) {
       float newX = ROAD_SIZE * (floor(random(6)) + 4 + i);
       float newY = 180 + j * ROAD_SIZE;
-      rocks[i][j] = new Rock(newX, newY);
-      /*
+      rocks[i][j] = new Rock(newX , newY);
+      
       do{
         float newX = ROAD_SIZE * (floor(random(6)) + 4);
         float newY = 180 + j * ROAD_SIZE;
         rocks[i][j] = new Rock(newX, newY);
       }while(isExist(rocks[i][0].x, rocks[i][1].x, rocks[i][2].x));
-      */
+      
     }
   }
+  */
 }
 
 boolean isExist(float positionA, float positionB, float positionC){
@@ -217,12 +222,15 @@ void draw() {
       player.update();
       
       // Rock
+      
+      rocks.display();
+      /*
       for(int i = 0; i < rocks.length; i++){
         for(int j = 0; j < rocks[i].length; j++){
           rocks[i][j].display();
-          rocks[i][j].checkCollision(player);
         }
       }
+      */
 
       // Timer
       gameTimer --;
@@ -317,7 +325,6 @@ color getTimeTextColor(int frames){
 
   
 void keyPressed(){
-
   if(key==CODED){
     switch(keyCode){
       case RIGHT:
@@ -337,9 +344,8 @@ void keyPressed(){
     if(key=='r'){
       player.hurt();
     }
-   }
   }
-
+}
 
 
 
