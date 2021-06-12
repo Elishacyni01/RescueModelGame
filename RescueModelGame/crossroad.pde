@@ -8,5 +8,6 @@ class Crossroad{
   Crossroad(float x, float y){
     this.x = x;
     this.y = y;
+    
   }
 }
