@@ -334,7 +334,7 @@ void keyPressed(){
       gameTimer -= 180;
     }
     if(key=='r'){
-      player.health--;
+      player.hurt();
     }
   }
 }

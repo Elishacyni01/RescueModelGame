@@ -16,7 +16,7 @@ class Rock{
   void checkCollision(Player player){
 
     if(isHit(x, y, w, h, player.x, player.y, player.w, player.h)){
-
+      x=y=-1000;
       player.hurt();
       isAlive = false;
     }
