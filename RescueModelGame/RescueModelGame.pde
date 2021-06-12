@@ -317,6 +317,7 @@ color getTimeTextColor(int frames){
 
   
 void keyPressed(){
+
   if(key==CODED){
     switch(keyCode){
       case RIGHT:
@@ -336,8 +337,8 @@ void keyPressed(){
     if(key=='r'){
       player.hurt();
     }
+   }
   }
-}
 
 
 
