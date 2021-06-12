@@ -32,6 +32,13 @@ class Player{
             indexRunPose = 0;
             break;
         }
+        if(health<=6 && health>3){
+          indexStatus = 1;
+          }
+            
+        if(health<=3){
+          indexStatus = 1;
+          } 
       }
       image(playerImage[indexStatus][indexRunPose], x, y);
     }
