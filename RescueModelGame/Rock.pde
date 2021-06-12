@@ -8,6 +8,9 @@ class Rock{
     if(isAlive == true){
       image(rock, x, y, w, h);
     }
+    if(rightState){
+      x--;
+  }
   }
   
   void checkCollision(Player player){

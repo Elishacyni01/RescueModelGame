@@ -220,6 +220,7 @@ void draw() {
       for(int i = 0; i < rocks.length; i++){
         for(int j = 0; j < rocks[i].length; j++){
           rocks[i][j].display();
+          rocks[i][j].checkCollision(player);
         }
       }
 
@@ -337,6 +338,7 @@ void keyPressed(){
     }
   }
 }
+
 
 
 
