@@ -41,13 +41,14 @@ boolean downState = false;
 Player player;
 //Rock[][] rocks;
 Rock[] rocks;
+Salesman[] sales;
 
 void setup() {
   size(640, 480, P2D);
   
   hand = loadImage("img/hand.png");
   rock = loadImage("img/rock.png");
-  salesman = loadImage("img/salesman.jpg");
+  salesman = loadImage("img/salesman.png");
   motor = loadImage("img/motor.jpg");
   gamestart = loadImage("img/gamestart.jpg");
   gamerun1 = loadImage("img/gamerun1.jpg");
@@ -95,7 +96,6 @@ void initGame(){
   gameTimer = GAME_INIT_TIMER;
   
   // Initialize Rocks and their positions
-  
   rocks = new Rock[19];
   
   for(int i=0; i < rocks.length; i++){
@@ -105,7 +105,15 @@ void initGame(){
     rocks[i] = new Rock(newX, newY);
   }
   
+  // Initialize Salesmen and their positions
+  sales = new Salesman[8];
   
+  for(int i=0; i < sales.length; i++){
+    float newX = (6*i + 9) * ROAD_SIZE;
+    float newY = 180 + floor(random(3)) * ROAD_SIZE;
+    
+    sales[i] = new Salesman(newX, newY);
+  }
 }
 
 boolean isExist(float positionA, float positionB, float positionC){
@@ -201,7 +209,7 @@ void draw() {
         image(road2, roadSpeed + i * ROAD_SIZE, 380);
       }
       
-      //crossroad
+      // Crossroad
        for(int i=0; i < 1; i++){
          image(crossroad, roadSpeed + (i+20) * ROAD_SIZE, 180);
          image(crossroad, roadSpeed + (i+50) * ROAD_SIZE, 180);
@@ -227,17 +235,13 @@ void draw() {
         }
       }
       
-      /*
-      for(Rock i : rocks){
-        if(i == null)continue;
-        rock.display();
-        i.checkCollision(player);
+      // Salesman
+      for(int i=0; i < sales.length; i++){
+        if(sales[i].isAlive){
+          sales[i].display();
+          sales[i].checkCollision(player);
         }
-      */
-      for(int i=0; i < rocks.length; i++){
-        rocks[i].display();
       }
-      
 
       // Timer
       gameTimer --;
