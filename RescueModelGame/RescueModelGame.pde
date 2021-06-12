@@ -40,7 +40,7 @@ boolean downState = false;
 
 Player player;
 //Rock[][] rocks;
-Rock rocks;
+Rock[] rocks;
 
 void setup() {
   size(640, 480, P2D);
@@ -95,25 +95,17 @@ void initGame(){
   gameTimer = GAME_INIT_TIMER;
   
   // Initialize Rocks and their positions
-  rocks = new Rock(100 + roadSpeed,180);
   
+  rocks = new Rock[19];
   
-  /*
-  for(int i = 0; i < rocks.length; i++){
-    for (int j = 0; j < rocks[i].length; j++) {
-      float newX = ROAD_SIZE * (floor(random(6)) + 4 + i);
-      float newY = 180 + j * ROAD_SIZE;
-      rocks[i][j] = new Rock(newX , newY);
-      
-      do{
-        float newX = ROAD_SIZE * (floor(random(6)) + 4);
-        float newY = 180 + j * ROAD_SIZE;
-        rocks[i][j] = new Rock(newX, newY);
-      }while(isExist(rocks[i][0].x, rocks[i][1].x, rocks[i][2].x));
-      
-    }
+  for(int i=0; i < rocks.length; i++){
+    float newX = (3*i + 4) * ROAD_SIZE;
+    float newY = 180 + floor(random(3)) * ROAD_SIZE;
+    
+    rocks[i] = new Rock(newX, newY);
   }
-  */
+  
+  
 }
 
 boolean isExist(float positionA, float positionB, float positionC){
@@ -228,15 +220,24 @@ void draw() {
       player.update();
       
       // Rock
-      
-      rocks.display();
-      /*
       for(int i = 0; i < rocks.length; i++){
-        for(int j = 0; j < rocks[i].length; j++){
-          rocks[i][j].display();
+        if(rocks[i].isAlive){
+          rocks[i].display();
+          rocks[i].checkCollision(player);
         }
       }
+      
+      /*
+      for(Rock i : rocks){
+        if(i == null)continue;
+        rock.display();
+        i.checkCollision(player);
+        }
       */
+      for(int i=0; i < rocks.length; i++){
+        rocks[i].display();
+      }
+      
 
       // Timer
       gameTimer --;

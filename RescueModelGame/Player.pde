@@ -3,8 +3,8 @@ class Player{
   float w = ROAD_SIZE, h = ROAD_SIZE;
   int row;
   
-  final float PLAYER_INIT_X = 30;
-  final float PLAYER_INIT_Y = 380;
+  final float PLAYER_INIT_X = 0;
+  final float PLAYER_INIT_Y = 280;
   
   float frame;
   int indexStatus = 0;
