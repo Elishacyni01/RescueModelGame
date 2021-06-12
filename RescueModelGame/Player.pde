@@ -76,6 +76,11 @@ class Player{
       gameState = GAME_LOSE_BROKEN;
     }
   }
+  
+  void reduceTime(){
+    gameTimer-=360;
+    rightState = false;
+  }
     
   Player(){
     x = PLAYER_INIT_X;

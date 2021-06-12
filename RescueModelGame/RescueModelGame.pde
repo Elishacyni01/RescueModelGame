@@ -29,7 +29,7 @@ int barWidth = 60;
 float roadSpeed = 0;
 final int ROAD_SIZE = 100;
 
-final int GAME_INIT_TIMER = 7200;
+final int GAME_INIT_TIMER = 3600;
 int gameTimer = GAME_INIT_TIMER;
 final float CLOCK_BONUS_SECONDS = 15f;
 
@@ -207,10 +207,12 @@ void draw() {
         image(road1, roadSpeed + i * ROAD_SIZE, 280);
         image(road2, roadSpeed + i * ROAD_SIZE, 380);
       }
+     
       
       // Crossroad
        for(int i=0; i < 1; i++){
-         image(crossroad, roadSpeed + (i+20) * ROAD_SIZE, 180);
+         image(crossroad, roadSpeed + (i+10) * ROAD_SIZE, 180);
+         image(crossroad, roadSpeed + (i+30) * ROAD_SIZE, 180);
          image(crossroad, roadSpeed + (i+50) * ROAD_SIZE, 180);
        }
       
@@ -302,7 +304,7 @@ void drawTimerUI(){
   textAlign(RIGHT, TOP);
   
   // Time Text Shadow Effect
-  fill(0, 120);
+  fill(0, 60);
   text(timeString, 623, 3);
   
   // Actual Time Text
@@ -325,11 +327,10 @@ color getTimeTextColor(int frames){
   int min = floor(frames / (60 * 60));
   int sec = (floor(frames / 60)) % 60;
   
-  if(min >= 2){return #00ffff;
-  }else if(min == 1){return #000000;
-  }else if(min == 0 && sec <= 59 && sec >= 30){return #ffcc00;
-  }else if(min == 0 && sec <= 29 && sec >= 10){return #ff6600;
-  }else {return #000000;} 
+  if(min == 1){return #4d1f00;
+  }else if(min == 0 && sec <= 59 && sec >= 30){return #4d1f00;
+  }else if(min == 0 && sec <= 29 && sec >= 10){return #8b4513;
+  }else {return #ffa07a;} 
   
 }
 

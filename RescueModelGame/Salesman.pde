@@ -12,7 +12,8 @@ class Salesman{
     if(isHit(x+ roadSpeed, y, w, h, player.x, player.y, player.w, player.h)){
 
       // stop player for some time
-
+     player.reduceTime();
+     isAlive = false;
     }
   }
   
