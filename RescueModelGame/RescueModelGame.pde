@@ -3,10 +3,9 @@ PImage road0, road1, road2;
 PImage hand, salesman, motor, life, lifeHalf, sky, rock, crossroad;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
 PImage restartHovered, restartNormal, startHovered, startNormal;
-PImage [][] playerImage;
-// PImage [] playerIdle, playerMotor, playerCrash;
 
-PImage playerCrash, playerIdle;
+PImage [][] playerImage;
+PImage playerCrash0, playerIdle;
 PFont font;
 
 final int GAME_START = 0, GAME_RUN1 = 1, GAME_RUN2 = 2, GAME_WIN = 3, GAME_LOSE_TIME = 4, GAME_LOSE_BROKEN = 5;
@@ -39,7 +38,6 @@ boolean upState = false;
 boolean downState = false;
 
 Player player;
-//Rock[][] rocks;
 Rock[] rocks;
 Salesman[] sales;
 
@@ -65,13 +63,8 @@ void setup() {
   road2 = loadImage("img/road2.png");
   life = loadImage("img/life.png");
   lifeHalf = loadImage("img/lifeHalf.png");
-  playerIdle = loadImage("img/players/playerIdle.png");
   crossroad = loadImage("img/crossroad.png");
   
-  font = createFont("font/font.ttf", 56);
-  textFont(font);
-
-
   // Load PImage[][] player
   playerImage = new PImage[PLAYER_STATUS][PLAYER_RUN_POSE];
   for(int i = 0; i < playerImage.length; i++){
@@ -80,14 +73,20 @@ void setup() {
     }
   }
   
+  // Player loadImage
+  playerCrash0 = loadImage("img/players/playerCrash0.jpg");
+  playerIdle = loadImage("img/players/playerIdle.png");
   
+  // THSR loadImage
   thsr0 = loadImage("img/thsr0.jpg");
   thsr1 = loadImage("img/thsr1.jpg");
   thsr2 = loadImage("img/thsr2.jpg");
   thsr3 = loadImage("img/thsr3.jpg");
   
+  font = createFont("font/font.ttf", 56);
+  textFont(font);
+  
   initGame();
-
 }
 
 void initGame(){

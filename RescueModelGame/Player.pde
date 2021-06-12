@@ -60,6 +60,7 @@ class Player{
     
     frame ++;
   }
+
   
   void hurt(){
     health--;
