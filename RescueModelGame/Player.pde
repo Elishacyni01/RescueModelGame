@@ -55,6 +55,7 @@ class Player{
     }
     
     frame ++;
+<<<<<<< Updated upstream
     
     /*
     if(rightState){
@@ -67,6 +68,18 @@ class Player{
         }
         t++;
       }
+=======
+  }
+  
+  void hurt(){
+    health--;
+    // PlayerCrash image & move to the other side of rock or car
+    
+    
+    
+    if(health == 0){
+      gameState = GAME_LOSE_BROKEN;
+>>>>>>> Stashed changes
     }
     
     
