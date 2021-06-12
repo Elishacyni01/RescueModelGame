@@ -10,7 +10,7 @@ class Player{
   int indexStatus = 0;
   int indexRunPose = 0;
   
-  float speed = 15;
+  float speed = 30;
   int health = 10;
   boolean playerIdleAppear = true;
   
