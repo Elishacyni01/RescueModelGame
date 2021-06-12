@@ -5,20 +5,29 @@ class Rock{
   
   void display(){
     
+  //  if(rightState){
+  //    x--;
+  //}
+    
     if(isAlive == true){
-      image(rock, x, y, w, h);
+      for(int i=0; i<3; i++){
+        x=100+i*200;
+        y=170+i*100;
+        image(rock, x, y, w, h);
+      }
     }
+    
   }
   
   void checkCollision(Player player){
 
     if(isHit(x, y, w, h, player.x, player.y, player.w, player.h)){
-
+      x=y=-1000;
       player.hurt();
       isAlive = false;
     }
   }
-  
+
   // Contructor
   Rock(float x, float y){
     isAlive = true;

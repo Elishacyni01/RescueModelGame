@@ -2,7 +2,7 @@ PImage thsr0,thsr1,thsr2,thsr3;
 PImage road0, road1, road2;
 PImage hand, salesman, motor, life, lifeHalf, sky, rock;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
-PImage restartHovered, restartNormal, startHovered, startNormal;
+PImage restartHovered, restartNormal, startHovered, startNormal,crossroad;
 PImage [][] playerImage;
 // PImage [] playerIdle, playerMotor, playerCrash;
 
@@ -64,7 +64,7 @@ void setup() {
   life = loadImage("img/life.png");
   lifeHalf = loadImage("img/lifeHalf.png");
   playerIdle = loadImage("img/players/playerIdle.png");
-  
+  crossroad = loadImage("img/crossroad.png");
   font = createFont("font/font.ttf", 56);
   textFont(font);
 
@@ -220,6 +220,7 @@ void draw() {
       for(int i = 0; i < rocks.length; i++){
         for(int j = 0; j < rocks[i].length; j++){
           rocks[i][j].display();
+          rocks[i][j].checkCollision(player);
         }
       }
 
@@ -316,6 +317,7 @@ color getTimeTextColor(int frames){
 
   
 void keyPressed(){
+
   if(key==CODED){
     switch(keyCode){
       case RIGHT:
@@ -333,10 +335,11 @@ void keyPressed(){
       gameTimer -= 180;
     }
     if(key=='r'){
-      player.health--;
+      player.hurt();
     }
+   }
   }
-}
+
 
 
 
