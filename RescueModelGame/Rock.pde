@@ -1,6 +1,6 @@
 class Rock{
   float x, y;
-  float w = 60, h = ROAD_SIZE;
+  float w = 80, h = 80;
   boolean isAlive;
   
   void display(){
@@ -13,7 +13,7 @@ class Rock{
       for(int i=0; i<3; i++){
         x=100+i*200;
         y=170+i*100;
-        image(rock, x, y, w, h);
+        image(rock, x + roadSpeed, y, w, h);
       }
     }
     
