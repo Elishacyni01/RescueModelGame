@@ -10,7 +10,7 @@ PImage playerCrash, playerIdle;
 PFont font;
 
 final int GAME_START = 0, GAME_RUN1 = 1, GAME_RUN2 = 2, GAME_WIN = 3, GAME_LOSE_TIME = 4, GAME_LOSE_BROKEN = 5;
-int gameState = 0;
+int gameState = 2;
 
 final int START_BUTTON_WIDTH = 200;
 final int START_BUTTON_HEIGHT = 100;
@@ -208,6 +208,12 @@ void draw() {
         image(road1, roadSpeed + i * 100, 280);
         image(road2, roadSpeed + i * 100, 380);
       }
+      
+      //crossroad
+       for(int i=0; i < 1; i++){
+         image(crossroad, roadSpeed + i * 100+2100, 180);
+         image(crossroad, roadSpeed + i * 100+5100, 180);
+       }
       
       // Life
       for(int i = 0; i < player.health; i++){
