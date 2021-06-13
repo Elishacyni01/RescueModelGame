@@ -23,6 +23,7 @@ class Player{
     speed = 30;
       playerIdleAppear = true;
       
+      
       // switch image between player0&1
       
       if(rightState){
@@ -39,7 +40,6 @@ class Player{
               break;
           }
         }
-<<<<<<< Updated upstream
         if(health<=6 && health>3){
           indexStatus = 1;
           }
@@ -47,10 +47,8 @@ class Player{
         if(health<=3){
           indexStatus = 1;
           } 
-=======
-        
+
         image(playerImage[indexStatus][indexRunPose], x, y);
->>>>>>> Stashed changes
       }
       
       if(upState){
@@ -107,8 +105,20 @@ class Player{
   }
   
   void reduceTime(){
+    
     gameTimer-=360;
-    rightState = false;
+    delay(5000);
+   //try {
+   // Thread.sleep(5000); 
+   // gameTimer-=360;
+ 
+   // } catch(InterruptedException ex) {
+      
+   // Thread.currentThread().interrupt();
+   //  }
+
+    //gameTimer-=360;
+    //rightState = false;
   }
     
   Player(){
