@@ -14,13 +14,9 @@ class Rock{
       // player.hurt();
       
         isAlive = false;
-      
-<<<<<<< Updated upstream
-      
+
       player.hurt();
       isAlive = false;
-=======
->>>>>>> Stashed changes
     }
   }
 
