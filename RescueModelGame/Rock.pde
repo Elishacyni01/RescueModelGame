@@ -3,7 +3,10 @@ class Rock{
   float w = ROAD_SIZE, h = ROAD_SIZE;
   boolean isAlive;
   
+  
+  
   void display(){
+    
     image(rock, x + roadSpeed, y, w, h);
   }
   
@@ -29,5 +32,7 @@ class Rock{
     isAlive = true;
     this.x = x;
     this.y = y;
+    
+    
   }
 }
