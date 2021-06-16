@@ -105,6 +105,14 @@ class Player{
    frame ++;
   }
   
+  //void touchLine(){
+   
+  //  if(player.x > 30){
+  //  x+=speed;
+  //  rightState = false;
+  //  }
+  //}
+  
   void reduceTime(){
 
     

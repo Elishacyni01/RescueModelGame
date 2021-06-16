@@ -22,6 +22,7 @@ final int RESTART_BUTTON_Y = 350;
 final int PLAYER_RUN_POSE = 2;
 final int PLAYER_STATUS = 3;
 int playerRow;
+int endingLine = 6000;
 
 final int BAR_HEIGHT = 60;
 int barWidth = 60;
@@ -207,6 +208,12 @@ void draw() {
         image(road1, roadSpeed + i * ROAD_SIZE, 280);
         image(road2, roadSpeed + i * ROAD_SIZE, 380);
       }
+      
+      //ending line
+      noStroke();
+      fill(#ffffff);
+      rect(roadSpeed +endingLine, 180, 20, 300);
+      //player.touchLine();
      
       
       // Crossroad
