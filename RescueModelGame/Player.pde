@@ -17,12 +17,10 @@ class Player{
   
   int hurtTimer = 0;
   int hurtDuration = 15;
-  boolean playerHurt = false;
 
   void update(){
     speed = 30;
       playerIdleAppear = true;
-      
       
       // switch image between player0&1
       
@@ -41,13 +39,12 @@ class Player{
           }
         }
         if(health <= 6 && health > 3){
-
           indexStatus = 1;
-          }
+        }
             
         if(health<=3 && health>=1){
           indexStatus = 2;
-          } 
+        } 
 
 
         image(playerImage[indexStatus][indexRunPose], x, y);
@@ -78,7 +75,7 @@ class Player{
     
     frame ++;
   }
-  }
+  
 
   
   void hurt(){
@@ -134,6 +131,6 @@ class Player{
   Player(){
     x = PLAYER_INIT_X;
     y = PLAYER_INIT_Y;
-    playerHurt = false;
+    
   }
 }
