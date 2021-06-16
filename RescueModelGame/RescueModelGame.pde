@@ -292,6 +292,9 @@ void draw() {
         }
       }
 
+      //removing
+      drawRemovingUI();
+      
       // Timer
       gameTimer --;
       if(gameTimer <= 0) gameState = GAME_LOSE_TIME;
@@ -343,6 +346,25 @@ boolean isHit(float ax, float ay, float aw, float ah, float bx, float by, float 
         ax < bx + bw &&    // a left edge past b right
         ay + ah > by &&    // a top edge past b bottom
         ay < by + bh;
+}
+
+void drawRemovingUI(){
+  noStroke();
+  fill(#000000);
+  rect(30, 80, 310, 3);
+  float depthString = roadSpeed/-30;
+  float RemovingDot = (depthString*2)+30;
+  fill(#ffcc00);
+  circle(RemovingDot, 80, 20);
+  if(rightState){
+    RemovingDot++;
+  }
+  //textSize(56);
+  //textAlign(RIGHT, BOTTOM);
+  //fill(0, 120);
+  //text(depthString, width + 3, height + 3);
+  //fill(#ffcc00);
+  //text(depthString, width, height);
 }
 
 //mm:ss format
