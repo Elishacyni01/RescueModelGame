@@ -44,7 +44,7 @@ class Player{
           indexStatus = 1;
           }
             
-        if(health<=3){
+        if(health<=3 && health>=1){
           indexStatus = 2;
           } 
 
