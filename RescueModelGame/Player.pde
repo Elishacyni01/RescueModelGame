@@ -40,26 +40,18 @@ class Player{
               break;
           }
         }
-<<<<<<< Updated upstream
-        if(health<=6 && health>3){
-=======
-
         if(health <= 6 && health > 3){
->>>>>>> Stashed changes
+
           indexStatus = 1;
           }
             
         if(health<=3 && health>=1){
           indexStatus = 2;
           } 
-<<<<<<< Updated upstream
+
 
         image(playerImage[indexStatus][indexRunPose], x, y);
-=======
-        
-        image(playerImage[indexStatus][indexRunPose], x, y);
 
->>>>>>> Stashed changes
       }
       
       if(upState){
@@ -85,6 +77,7 @@ class Player{
       }
     
     frame ++;
+  }
   }
 
   
@@ -116,7 +109,7 @@ class Player{
   }
   
   void reduceTime(){
-<<<<<<< Updated upstream
+
     
     gameTimer-=360;
     delay(5000);
@@ -131,11 +124,12 @@ class Player{
 
     //gameTimer-=360;
     //rightState = false;
-=======
+
     gameTimer -= 360;
     rightState = false;
->>>>>>> Stashed changes
+
   }
+
     
   Player(){
     x = PLAYER_INIT_X;
