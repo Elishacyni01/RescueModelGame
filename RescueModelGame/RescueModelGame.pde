@@ -9,7 +9,7 @@ PImage playerCrash0, playerIdle;
 PFont font;
 
 final int GAME_START = 0, GAME_RUN1 = 1, GAME_RUN2 = 2, GAME_WIN = 3, GAME_LOSE_TIME = 4, GAME_LOSE_BROKEN = 5;
-int gameState = 1;
+int gameState = 2;
 
 final int START_BUTTON_WIDTH = 200;
 final int START_BUTTON_HEIGHT = 100;
@@ -119,6 +119,14 @@ void initGame(){
     float newY = 180 + floor(random(3)) * ROAD_SIZE;
     
     rocks[i] = new Rock(newX, newY);
+    
+    // NO ROCKS ALLOWED ON CROSSROAD
+    if(newX == 10 * ROAD_SIZE || newX == 13 * ROAD_SIZE
+       || newX == 31 * ROAD_SIZE || newX == 52 * ROAD_SIZE){
+         
+      rocks[i].isAlive = false;
+      
+    }
   }
   
   // Initialize Salesmen and their positions
@@ -213,7 +221,7 @@ void draw() {
       for (int i = 0; i < xpos.length-1; i ++ ) {
         float d = dist(xpos[i], ypos[i], xpos[i+1], ypos[i+1]);
         if(d > 50){
-          barWidth++;
+          barWidth += 3;
         }
       }
       
@@ -247,13 +255,10 @@ void draw() {
         image(road2, roadSpeed + i * ROAD_SIZE, 380);
       }
      
-      
       // Crossroad
-       for(int i=0; i < 1; i++){
-         image(crossroad, roadSpeed + (i+10) * ROAD_SIZE, 180);
-         image(crossroad, roadSpeed + (i+30) * ROAD_SIZE, 180);
-         image(crossroad, roadSpeed + (i+50) * ROAD_SIZE, 180);
-       }
+      for(int i=0; i < 3; i++){
+        image(crossroad, roadSpeed + (10 + 20*i) * ROAD_SIZE, 180);
+      }
       
       // Life
       for(int i = 0; i < player.health; i++){
