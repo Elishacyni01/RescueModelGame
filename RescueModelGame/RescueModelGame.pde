@@ -9,7 +9,7 @@ PImage playerCrash0, playerIdle;
 PFont font;
 
 final int GAME_START = 0, GAME_RUN1 = 1, GAME_RUN2 = 2, GAME_WIN = 3, GAME_LOSE_TIME = 4, GAME_LOSE_BROKEN = 5;
-int gameState = 2;
+int gameState = 1;
 
 final int START_BUTTON_WIDTH = 200;
 final int START_BUTTON_HEIGHT = 100;
@@ -41,6 +41,10 @@ boolean downState = false;
 Player player;
 Rock[] rocks;
 Salesman[] sales;
+
+// Declare an array of x position
+int[] xpos = new int[2];
+int[] ypos = new int[2];
 
 void setup() {
   size(640, 480, P2D);
@@ -92,6 +96,19 @@ void setup() {
 
 void initGame(){
   // Initialize Game
+  
+  // FOR GAMERUN1
+  // Initialize Barwidth & THSR
+  barWidth = 60;
+  
+  // Initialize all elements of each array to zero.
+  for (int i = 0; i < xpos.length; i ++ ) {
+    xpos[i] = 0; 
+    ypos[i] = 0;
+  }
+  
+  // FOR GAMERUN2
+  // Initialize Player
   player = new Player();
   gameTimer = GAME_INIT_TIMER;
   
@@ -165,7 +182,7 @@ void draw() {
       }
       
       // Restrict hand area
-      noCursor();
+      // noCursor();
       if(mouseX < 170){
         mouseX = 170;
       }else if(mouseX > 520){
@@ -178,6 +195,28 @@ void draw() {
       }
       
       image(hand, mouseX - 120 , mouseY - 120);
+      
+      // ACTION DETECT
+      
+      // Shift array values
+      for (int i = 0; i < xpos.length-1; i ++ ) {
+        // Shift all elements down one spot. 
+        // xpos[0] = xpos[1], xpos[1] = xpos[2], and so on. Stop at the second to last element.
+        xpos[i] = xpos[i+1];
+        ypos[i] = ypos[i+1];
+      }
+  
+      // New location
+      xpos[xpos.length-1] = mouseX; // Update the last spot in the array with the mouse location.
+      ypos[ypos.length-1] = mouseY;
+      
+      // If distance over 50, bar increase
+      for (int i = 0; i < xpos.length-1; i ++ ) {
+        float d = dist(xpos[i], ypos[i], xpos[i+1], ypos[i+1]);
+        if(d > 50){
+          barWidth++;
+        }
+      }
       
       // Bar
       fill(#FFFF00);
