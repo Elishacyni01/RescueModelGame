@@ -45,7 +45,7 @@ class Player{
           }
             
         if(health<=3){
-          indexStatus = 1;
+          indexStatus = 2;
           } 
 
         image(playerImage[indexStatus][indexRunPose], x, y);

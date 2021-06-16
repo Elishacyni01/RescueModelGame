@@ -74,14 +74,14 @@ void setup() {
   }
   
   // Player loadImage
-  playerCrash0 = loadImage("img/players/playerCrash0.jpg");
+  playerCrash0 = loadImage("img/players/playerCrash0.png");
   playerIdle = loadImage("img/players/playerIdle.png");
   
   // THSR loadImage
-  thsr0 = loadImage("img/thsr0.jpg");
-  thsr1 = loadImage("img/thsr1.jpg");
-  thsr2 = loadImage("img/thsr2.jpg");
-  thsr3 = loadImage("img/thsr3.jpg");
+  thsr0 = loadImage("img/thsr0.png");
+  thsr1 = loadImage("img/thsr1.png");
+  thsr2 = loadImage("img/thsr2.png");
+  thsr3 = loadImage("img/thsr3.png");
   
   font = createFont("font/font.ttf", 56);
   textFont(font);
