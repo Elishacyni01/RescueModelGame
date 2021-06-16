@@ -40,15 +40,26 @@ class Player{
               break;
           }
         }
+<<<<<<< Updated upstream
         if(health<=6 && health>3){
+=======
+
+        if(health <= 6 && health > 3){
+>>>>>>> Stashed changes
           indexStatus = 1;
           }
             
         if(health<=3){
           indexStatus = 1;
           } 
+<<<<<<< Updated upstream
 
         image(playerImage[indexStatus][indexRunPose], x, y);
+=======
+        
+        image(playerImage[indexStatus][indexRunPose], x, y);
+
+>>>>>>> Stashed changes
       }
       
       if(upState){
@@ -78,8 +89,8 @@ class Player{
 
   
   void hurt(){
-    // health -- ;
     
+    rightState = false;
     // PlayerCrash image & move to the other side of rock or car
     hurtTimer = hurtDuration;
     
@@ -92,19 +103,20 @@ class Player{
     }
     println(hurtTimer);
     if(hurtTimer == 0){
-        playerCrashAppear = false;
-      }
+      playerCrashAppear = false;
+    }
     if(playerCrashAppear == true){
-        image(playerCrash0, x, y);
-      }
+      image(playerCrash0, x, y);
+    }
       
     if(health == 0){
       gameState = GAME_LOSE_BROKEN;
     }
-   
+   frame ++;
   }
   
   void reduceTime(){
+<<<<<<< Updated upstream
     
     gameTimer-=360;
     delay(5000);
@@ -119,6 +131,10 @@ class Player{
 
     //gameTimer-=360;
     //rightState = false;
+=======
+    gameTimer -= 360;
+    rightState = false;
+>>>>>>> Stashed changes
   }
     
   Player(){

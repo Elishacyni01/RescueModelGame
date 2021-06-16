@@ -234,7 +234,7 @@ void draw() {
           rocks[i].display();
           rocks[i].checkCollision(player);
         }else{
-          player.hurt();
+          // player.hurt();
         }
       }
       
@@ -359,8 +359,6 @@ void keyPressed(){
     }
   }
 }
-
-
 
 
 void keyReleased(){
