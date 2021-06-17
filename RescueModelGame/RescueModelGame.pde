@@ -1,5 +1,5 @@
 PImage thsr0,thsr1,thsr2,thsr3;
-PImage road0, road1, road2;
+PImage road0, road1, road2, road3, road4, road5;
 PImage hand, salesman, motor, life, lifeHalf, sky, rock, crossroad;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
 PImage restartHovered, restartNormal, startHovered, startNormal;
@@ -66,6 +66,9 @@ void setup() {
   road0 = loadImage("img/road0.png");
   road1 = loadImage("img/road1.png");
   road2 = loadImage("img/road2.png");
+  road3 = loadImage("img/road3.png");
+  road4 = loadImage("img/road4.png");
+  road5 = loadImage("img/road5.png");
   life = loadImage("img/life.png");
   lifeHalf = loadImage("img/lifeHalf.png");
   crossroad = loadImage("img/crossroad.png");
@@ -265,6 +268,15 @@ void draw() {
       // Crossroad
       for(int i=0; i < 3; i++){
         image(crossroad, roadSpeed + (10 + 20*i) * ROAD_SIZE, 180);
+      }
+      
+      for(int i=0; i < 3; i++){
+        for(int j=0; j < 2; j++){
+          image(road3, roadSpeed + (10 + 20*i) * ROAD_SIZE, -20 + j * ROAD_SIZE);
+          image(road4, roadSpeed + (11 + 20*i) * ROAD_SIZE, -20 + j * ROAD_SIZE);
+          image(road4, roadSpeed + (12 + 20*i) * ROAD_SIZE, -20 + j * ROAD_SIZE);
+          image(road5, roadSpeed + (13 + 20*i) * ROAD_SIZE, -20 + j * ROAD_SIZE);
+        }
       }
       
       // Life
