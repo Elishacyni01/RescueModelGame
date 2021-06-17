@@ -7,10 +7,17 @@ class Motor{
     image(motor0, x + roadSpeed, y, w, h);
   }
   
-  
-  void checkCollision(Player player){
-    
+  boolean checkCollision(Player player){
+
+    if(isHit(x + roadSpeed, y, w, h, player.x, player.y, player.w, player.h)){
+      isAlive = false;
+      
+      return true;
+    }else{
+      return false;
+    }
   }
+  
   
   // Contructor
   Motor(float x, float y){

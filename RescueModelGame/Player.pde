@@ -14,12 +14,13 @@ class Player{
   int health = 10;
   boolean playerIdleAppear = true;
   boolean playerCrashAppear = false;
+  boolean playerFriendAppear = false;
   
   int hurtTimer = 0;
   int hurtDuration = 15;
 
   void update(){
-    speed = 50;
+    
       playerIdleAppear = true;
       
       // switch image between player0&1
@@ -87,31 +88,30 @@ class Player{
     
     if(hurtTimer == 0){
       
-      playerIdleAppear = true;
-      playerCrashAppear = false;
-      
+      player.update();
     }
     
     // PlayerCrash image
-    for(int i = 0; i < 15;i++){
-      if(hurtTimer > 0){
+    
+    if(frame % 15 != 0){
         
-        // Player is not allowed to make movement
-        rightState = false;
-        upState = false;
-        downState = false;
+      // Player is not allowed to make movement
+      rightState = false;
+      upState = false;
+      downState = false;
         
         
-        playerIdleAppear = false;
-        playerCrashAppear = true;
+      playerIdleAppear = false;
+      playerCrashAppear = true;
         
-        if(playerCrashAppear == true){
-          image(playerCrash0, x, y);
-        }
-        println(hurtTimer);
+      if(playerCrashAppear == true){
+        image(playerCrash0, x, y);
       }
-      hurtTimer --;
+      println(hurtTimer);
+      println(frame);
     }
+    hurtTimer --;
+    frame ++;
     
     
     
@@ -193,7 +193,43 @@ class Player{
 
   }
 
+  void helpByFriend(){
+    playerIdleAppear = false;
+    playerCrashAppear = false;
+    playerFriendAppear = true;
     
+    if(rightState){
+      roadSpeed -= 3 * speed;
+    }
+    
+      
+    if(upState){
+      if(y == 180){
+        y = 180;
+      }else{
+        y -= h;
+      }
+      upState = false;
+    }
+      
+    if(downState){
+      if(y == height - h){
+        y = height - h;
+      }else{
+        y += h;
+      }
+      downState = false;
+    }
+      
+    if(playerFriendAppear == true){
+      image(motor1, x, y);
+    }
+    
+    frame ++;
+  }
+  
+  
+  
   Player(){
     x = PLAYER_INIT_X;
     y = PLAYER_INIT_Y;

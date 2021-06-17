@@ -161,7 +161,7 @@ void initGame(){
   motors = new Motor[2];
   
   for(int i=0; i < motors.length; i++){
-    float newX = (25*i + 20) * ROAD_SIZE;
+    float newX = (24*i + 18) * ROAD_SIZE;
     float newY = 180 + floor(random(3)) * ROAD_SIZE;
     
     motors[i] = new Motor(newX, newY);
@@ -362,8 +362,15 @@ void draw() {
       // Motor
       for(int i=0; i < motors.length; i++){
         if(motors[i].isAlive){
-          motors[i].display();
-          motors[i].checkCollision(player);
+          
+          if(motors[i].checkCollision(player)){
+            
+            player.helpByFriend();
+            
+          }else{
+            
+            motors[i].display();
+          }
         }
       }
       
@@ -452,7 +459,7 @@ void drawRemovingUI(){
   }
 }
 
-//mm:ss format
+// mm:ss format
 void drawTimerUI(){
   textSize(56);
   String timeString = convertFramesToTimeString(gameTimer);
