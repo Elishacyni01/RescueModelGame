@@ -1,5 +1,5 @@
 PImage thsr0,thsr1,thsr2,thsr3;
-PImage road0, road1, road2;
+PImage road0, road1, road2, road3, road4, road5;
 PImage hand, salesman, motor, life, lifeHalf, sky, rock, crossroad;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
 PImage restartHovered, restartNormal, startHovered, startNormal;
@@ -22,6 +22,7 @@ final int RESTART_BUTTON_Y = 350;
 final int PLAYER_RUN_POSE = 2;
 final int PLAYER_STATUS = 3;
 int playerRow;
+int endingLine = 6000;
 
 final int BAR_HEIGHT = 60;
 int barWidth = 60;
@@ -40,6 +41,10 @@ boolean downState = false;
 Player player;
 Rock[] rocks;
 Salesman[] sales;
+
+// Declare an array of x position
+int[] xpos = new int[2];
+int[] ypos = new int[2];
 
 void setup() {
   size(640, 480, P2D);
@@ -61,6 +66,9 @@ void setup() {
   road0 = loadImage("img/road0.png");
   road1 = loadImage("img/road1.png");
   road2 = loadImage("img/road2.png");
+  road3 = loadImage("img/road3.png");
+  road4 = loadImage("img/road4.png");
+  road5 = loadImage("img/road5.png");
   life = loadImage("img/life.png");
   lifeHalf = loadImage("img/lifeHalf.png");
   crossroad = loadImage("img/crossroad.png");
@@ -74,14 +82,14 @@ void setup() {
   }
   
   // Player loadImage
-  playerCrash0 = loadImage("img/players/playerCrash0.jpg");
+  playerCrash0 = loadImage("img/players/playerCrash0.png");
   playerIdle = loadImage("img/players/playerIdle.png");
   
   // THSR loadImage
-  thsr0 = loadImage("img/thsr0.jpg");
-  thsr1 = loadImage("img/thsr1.jpg");
-  thsr2 = loadImage("img/thsr2.jpg");
-  thsr3 = loadImage("img/thsr3.jpg");
+  thsr0 = loadImage("img/thsr0.png");
+  thsr1 = loadImage("img/thsr1.png");
+  thsr2 = loadImage("img/thsr2.png");
+  thsr3 = loadImage("img/thsr3.png");
   
   font = createFont("font/font.ttf", 56);
   textFont(font);
@@ -91,6 +99,19 @@ void setup() {
 
 void initGame(){
   // Initialize Game
+  
+  // FOR GAMERUN1
+  // Initialize Barwidth & THSR
+  barWidth = 60;
+  
+  // Initialize all elements of each array to zero.
+  for (int i = 0; i < xpos.length; i ++ ) {
+    xpos[i] = 0; 
+    ypos[i] = 0;
+  }
+  
+  // FOR GAMERUN2
+  // Initialize Player
   player = new Player();
   gameTimer = GAME_INIT_TIMER;
   
@@ -102,6 +123,14 @@ void initGame(){
     float newY = 180 + floor(random(3)) * ROAD_SIZE;
     
     rocks[i] = new Rock(newX, newY);
+    
+    // NO ROCKS ALLOWED ON CROSSROAD
+    if(newX == 10 * ROAD_SIZE || newX == 13 * ROAD_SIZE
+       || newX == 31 * ROAD_SIZE || newX == 52 * ROAD_SIZE){
+         
+      rocks[i].isAlive = false;
+      
+    }
   }
   
   // Initialize Salesmen and their positions
@@ -164,7 +193,7 @@ void draw() {
       }
       
       // Restrict hand area
-      noCursor();
+      // noCursor();
       if(mouseX < 170){
         mouseX = 170;
       }else if(mouseX > 520){
@@ -177,6 +206,28 @@ void draw() {
       }
       
       image(hand, mouseX - 120 , mouseY - 120);
+      
+      // ACTION DETECT
+      
+      // Shift array values
+      for (int i = 0; i < xpos.length-1; i ++ ) {
+        // Shift all elements down one spot. 
+        // xpos[0] = xpos[1], xpos[1] = xpos[2], and so on. Stop at the second to last element.
+        xpos[i] = xpos[i+1];
+        ypos[i] = ypos[i+1];
+      }
+  
+      // New location
+      xpos[xpos.length-1] = mouseX; // Update the last spot in the array with the mouse location.
+      ypos[ypos.length-1] = mouseY;
+      
+      // If distance over 50, bar increase
+      for (int i = 0; i < xpos.length-1; i ++ ) {
+        float d = dist(xpos[i], ypos[i], xpos[i+1], ypos[i+1]);
+        if(d > 50){
+          barWidth += 3;
+        }
+      }
       
       // Bar
       fill(#FFFF00);
@@ -207,14 +258,26 @@ void draw() {
         image(road1, roadSpeed + i * ROAD_SIZE, 280);
         image(road2, roadSpeed + i * ROAD_SIZE, 380);
       }
-     
       
+      //ending line
+      noStroke();
+      fill(#ffffff);
+      rect(roadSpeed +endingLine, 180, 20, 300);
+      //player.touchLine();
+     
       // Crossroad
-       for(int i=0; i < 1; i++){
-         image(crossroad, roadSpeed + (i+10) * ROAD_SIZE, 180);
-         image(crossroad, roadSpeed + (i+30) * ROAD_SIZE, 180);
-         image(crossroad, roadSpeed + (i+50) * ROAD_SIZE, 180);
-       }
+      for(int i=0; i < 3; i++){
+        image(crossroad, roadSpeed + (10 + 20*i) * ROAD_SIZE, 180);
+      }
+      
+      for(int i=0; i < 3; i++){
+        for(int j=0; j < 2; j++){
+          image(road3, roadSpeed + (10 + 20*i) * ROAD_SIZE, -20 + j * ROAD_SIZE);
+          image(road4, roadSpeed + (11 + 20*i) * ROAD_SIZE, -20 + j * ROAD_SIZE);
+          image(road4, roadSpeed + (12 + 20*i) * ROAD_SIZE, -20 + j * ROAD_SIZE);
+          image(road5, roadSpeed + (13 + 20*i) * ROAD_SIZE, -20 + j * ROAD_SIZE);
+        }
+      }
       
       // Life
       for(int i = 0; i < player.health; i++){
@@ -234,7 +297,7 @@ void draw() {
           rocks[i].display();
           rocks[i].checkCollision(player);
         }else{
-          player.hurt();
+          // player.hurt();
         }
       }
       
@@ -246,6 +309,9 @@ void draw() {
         }
       }
 
+      //removing
+      drawRemovingUI();
+      
       // Timer
       gameTimer --;
       if(gameTimer <= 0) gameState = GAME_LOSE_TIME;
@@ -297,6 +363,25 @@ boolean isHit(float ax, float ay, float aw, float ah, float bx, float by, float 
         ax < bx + bw &&    // a left edge past b right
         ay + ah > by &&    // a top edge past b bottom
         ay < by + bh;
+}
+
+void drawRemovingUI(){
+  noStroke();
+  fill(#000000);
+  rect(30, 80, 310, 3);
+  float depthString = roadSpeed/-30;
+  float RemovingDot = (depthString*2)+30;
+  fill(#ffcc00);
+  circle(RemovingDot, 80, 20);
+  if(rightState){
+    RemovingDot++;
+  }
+  //textSize(56);
+  //textAlign(RIGHT, BOTTOM);
+  //fill(0, 120);
+  //text(depthString, width + 3, height + 3);
+  //fill(#ffcc00);
+  //text(depthString, width, height);
 }
 
 //mm:ss format
@@ -359,8 +444,6 @@ void keyPressed(){
     }
   }
 }
-
-
 
 
 void keyReleased(){

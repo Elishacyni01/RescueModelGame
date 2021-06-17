@@ -3,7 +3,10 @@ class Rock{
   float w = ROAD_SIZE, h = ROAD_SIZE;
   boolean isAlive;
   
+  
+  
   void display(){
+    
     image(rock, x + roadSpeed, y, w, h);
   }
   
@@ -11,12 +14,16 @@ class Rock{
 
     if(isHit(x + roadSpeed, y, w, h, player.x, player.y, player.w, player.h)){
       player.health --;
+
       // player.hurt();
       
         isAlive = false;
 
+
       player.hurt();
+      
       isAlive = false;
+
     }
   }
 
@@ -25,5 +32,7 @@ class Rock{
     isAlive = true;
     this.x = x;
     this.y = y;
+    
+    
   }
 }
