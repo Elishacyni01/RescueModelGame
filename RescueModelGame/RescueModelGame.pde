@@ -1,6 +1,6 @@
 PImage thsr0,thsr1,thsr2,thsr3;
 PImage road0, road1, road2, road3, road4, road5;
-PImage hand, salesman, motor, life, lifeHalf, sky, rock, crossroad;
+PImage hand, salesman, motor0, motor1, life, lifeHalf, sky, rock, crossroad;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
 PImage restartHovered, restartNormal, startHovered, startNormal;
 
@@ -41,6 +41,8 @@ boolean downState = false;
 Player player;
 Rock[] rocks;
 Salesman[] sales;
+Motor[] motors;
+
 
 // Declare an array of x position
 int[] xpos = new int[2];
@@ -52,7 +54,8 @@ void setup() {
   hand = loadImage("img/hand.png");
   rock = loadImage("img/rock.png");
   salesman = loadImage("img/salesman.png");
-  motor = loadImage("img/motor.jpg");
+  motor0 = loadImage("img/motor0.png");
+  motor1 = loadImage("img/motor1.png");
   gamestart = loadImage("img/gamestart.jpg");
   gamerun1 = loadImage("img/gamerun1.jpg");
   gamewin = loadImage("img/gamewin.jpg");
@@ -142,7 +145,18 @@ void initGame(){
     
     sales[i] = new Salesman(newX, newY);
   }
+
+// Initialize Motor and their positions
+ motors = new Motor[2];
+  
+  for(int i=0; i < motors.length; i++){
+    float newX = (8*i + 9) * ROAD_SIZE;
+    float newY = 180 + floor(random(3)) * ROAD_SIZE;
+    
+    motors[i] = new Motor(newX, newY);
+  }
 }
+
 
 boolean isExist(float positionA, float positionB, float positionC){
   if (positionA == positionB && positionB == positionC){
@@ -306,6 +320,14 @@ void draw() {
         if(sales[i].isAlive){
           sales[i].display();
           sales[i].checkCollision(player);
+        }
+      }
+      
+        // Motor
+      for(int i=0; i < motors.length; i++){
+        if(motors[i].isAlive){
+          motors[i].display();
+          motors[i].checkCollision(player);
         }
       }
 
