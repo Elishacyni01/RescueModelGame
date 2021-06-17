@@ -41,10 +41,12 @@ class Player{
         }
         if(health <= 6 && health > 3){
           indexStatus = 1;
+          speed = 40;
         }
             
         if(health<=3 && health>=1){
           indexStatus = 2;
+          speed = 25;
         } 
 
 

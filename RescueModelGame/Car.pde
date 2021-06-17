@@ -2,7 +2,7 @@ class Car{
   float x, y;
   float w = ROAD_SIZE, h = ROAD_SIZE;
   boolean isAlive;
-  float speed = 3;
+  float speed = 2;
   
   void display(){
     image(car, x + roadSpeed, y, w, h);
