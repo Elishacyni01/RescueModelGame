@@ -10,7 +10,7 @@ class Player{
   int indexStatus = 0;
   int indexRunPose = 0;
   
-  float speed = 30;
+  float speed = 50;
   int health = 10;
   boolean playerIdleAppear = true;
   boolean playerCrashAppear = false;
@@ -19,7 +19,7 @@ class Player{
   int hurtDuration = 15;
 
   void update(){
-    speed = 30;
+    speed = 50;
       playerIdleAppear = true;
       
       // switch image between player0&1
@@ -79,30 +79,88 @@ class Player{
 
   
   void hurt(){
+    // PLAYER WILL CRASH TO THE GROUND
+    // PlayerHealth decrease will be written in their own class.
     
-    rightState = false;
-    // PlayerCrash image & move to the other side of rock or car
+    // Set the hurtTimer and start to count down
     hurtTimer = hurtDuration;
     
-    if(hurtTimer > 0){
-      speed = 0;
-      playerIdleAppear = false;
-      playerCrashAppear = true;
-      hurtTimer --;
+    if(hurtTimer == 0){
+      
+      playerIdleAppear = true;
+      playerCrashAppear = false;
       
     }
-    println(hurtTimer);
+    
+    // PlayerCrash image
+    for(int i = 0; i < 15;i++){
+      if(hurtTimer > 0){
+        
+        // Player is not allowed to make movement
+        rightState = false;
+        upState = false;
+        downState = false;
+        
+        
+        playerIdleAppear = false;
+        playerCrashAppear = true;
+        
+        if(playerCrashAppear == true){
+          image(playerCrash0, x, y);
+        }
+        println(hurtTimer);
+      }
+      hurtTimer --;
+    }
+    
+    
+    
+    
+    /*
+    if(hurtTimer > 0){
+      
+      // Player is not allowed to make movement
+      rightState = false;
+      upState = false;
+      downState = false;
+      
+      
+      playerIdleAppear = false;
+      playerCrashAppear = true;
+      
+      if(playerCrashAppear == true){
+        image(playerCrash0, x, y);
+      }
+      hurtTimer --;
+      println(hurtTimer);
+    }
+    
+    */
+    
+    
+    
+    /*
+    for(int hurtTimer = 0; hurtTimer < hurtDuration; hurtTimer++){
+      
+      playerIdleAppear = false;
+      //playerCrashAppear = true;
+      image(playerCrash0, x, y);
+      println(hurtTimer);
+      
+      frame++;
+    }
+    
+    
+    
+    
     if(hurtTimer == 0){
       playerCrashAppear = false;
     }
-    if(playerCrashAppear == true){
-      image(playerCrash0, x, y);
-    }
+    */
       
     if(health == 0){
       gameState = GAME_LOSE_BROKEN;
     }
-   frame ++;
   }
   
   //void touchLine(){

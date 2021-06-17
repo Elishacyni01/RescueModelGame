@@ -1,7 +1,6 @@
 PImage thsr0,thsr1,thsr2,thsr3;
-PImage car0, car1, car2;
 PImage road0, road1, road2, road3, road4, road5;
-PImage hand, salesman, motor0, motor1, life, lifeHalf, sky, rock, crossroad ;
+PImage hand, salesman, motor0, motor1, life, lifeHalf, sky, rock, crossroad, car;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
 PImage restartHovered, restartNormal, startHovered, startNormal;
 
@@ -45,14 +44,13 @@ Salesman[] sales;
 Motor[] motors;
 Car[] cars;
 
-
 // Declare an array of x position
 int[] xpos = new int[2];
 int[] ypos = new int[2];
 
 void setup() {
   size(640, 480, P2D);
-  
+  frameRate(60);
   hand = loadImage("img/hand.png");
   rock = loadImage("img/rock.png");
   salesman = loadImage("img/salesman.png");
@@ -77,9 +75,8 @@ void setup() {
   life = loadImage("img/life.png");
   lifeHalf = loadImage("img/lifeHalf.png");
   crossroad = loadImage("img/crossroad.png");
-  car0 = loadImage("img/car0.png");
-  car1 = loadImage("img/car1.png");
-  car2 = loadImage("img/car2.png");
+  car = loadImage("img/car.png");
+  
   
   // Load PImage[][] player
   playerImage = new PImage[PLAYER_STATUS][PLAYER_RUN_POSE];
@@ -171,15 +168,25 @@ void initGame(){
   }
 
   // Initialize Car and their positions
-     cars = new Car[3];
+  cars = new Car[6];
     
-    for(int i=0; i < cars.length; i++){
-      float newX = (20*i + 10) * ROAD_SIZE;
-      float newY = 0;
-      
-      cars[i] = new Car(newX, newY);
+  for(int i=0; i < cars.length; i++){
+    
+    float newX, newY;
+    newX = 0;
+    newY = 0;
+    
+    if(i % 2 == 0){
+      newX = (10 * i + 11) * ROAD_SIZE;
+      newY = -100;
+    }else if(i % 2 == 1){
+      newX = (10 * (i-1) + 12) * ROAD_SIZE;
+      newY = 290;
     }
+      
+    cars[i] = new Car(newX, newY);
   }
+}
 
 
 boolean isExist(float positionA, float positionB, float positionC){
@@ -324,7 +331,7 @@ void draw() {
         image(lifeHalf, 15 + h*70, 15, 50, 40);
         image(life, 15 + f*70, 15, 50, 40);
       }
-      println(player.health);
+      //println(player.health);
       
       // Player
       player.update();
@@ -332,10 +339,15 @@ void draw() {
       // Rock
       for(int i = 0; i < rocks.length; i++){
         if(rocks[i].isAlive){
-          rocks[i].display();
-          rocks[i].checkCollision(player);
-        }else{
-          // player.hurt();
+          
+          if(rocks[i].checkCollision(player)){
+            
+            player.hurt();
+            
+          }else{
+            
+            rocks[i].display();
+          }
         }
       }
       
@@ -358,13 +370,20 @@ void draw() {
       // Car
       for(int i=0; i < cars.length; i++){
         if(cars[i].isAlive){
-          cars[i].display();
-          cars[i].update();
-          cars[i].checkCollision(player);
+          
+          if(cars[i].checkCollision(player)){
+            
+            player.hurt();
+            
+          }else{
+            
+            cars[i].display();
+            cars[i].update();
+          }
         }
       }
 
-      //removing
+      // removing
       drawRemovingUI();
       
       // Timer
@@ -454,9 +473,9 @@ void addTime(float seconds){
 }
 
 String convertFramesToTimeString(int frames){
-  String mm=nf(floor(floor(frames/60)/60),2);
-  String ss=nf(floor(frames/60)%60,2);
-  return mm+":"+ss;  
+  String mm = nf(floor(floor(frames/60)/60),2);
+  String ss = nf(floor(frames/60)%60,2);
+  return mm + ":" + ss;
 }
 
 color getTimeTextColor(int frames){  

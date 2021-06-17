@@ -3,27 +3,21 @@ class Rock{
   float w = ROAD_SIZE, h = ROAD_SIZE;
   boolean isAlive;
   
-  
-  
   void display(){
     
     image(rock, x + roadSpeed, y, w, h);
   }
   
-  void checkCollision(Player player){
+  boolean checkCollision(Player player){
 
     if(isHit(x + roadSpeed, y, w, h, player.x, player.y, player.w, player.h)){
-      player.health --;
+      player.health -= 2;
 
-      // player.hurt();
-      
-        isAlive = false;
-
-
-      player.hurt();
-      
       isAlive = false;
-
+      
+      return true;
+    }else{
+      return false;
     }
   }
 

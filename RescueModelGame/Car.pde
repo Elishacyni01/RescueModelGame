@@ -2,12 +2,10 @@ class Car{
   float x, y;
   float w = ROAD_SIZE, h = ROAD_SIZE;
   boolean isAlive;
-  float speed = 1;
+  float speed = 3;
   
   void display(){
-    image(car0, x + roadSpeed, y, w, h);
-    image(car1, x + 100 + roadSpeed, y, w, h);
-    image(car2, x + 200 + roadSpeed, y, w, h);
+    image(car, x + roadSpeed, y, w, h);
   }
   
   void update(){
@@ -15,9 +13,19 @@ class Car{
     if(y >= height) y = -h;
   }
   
-  void checkCollision(Player player){
-    
+  boolean checkCollision(Player player){
+
+    if(isHit(x + roadSpeed, y, w, h, player.x, player.y, player.w, player.h)){
+      
+      player.health -= 3;
+      isAlive = false;
+      
+      return true;
+    }else{
+      return false;
+    }
   }
+  
   
   // Contructor
   Car(float x, float y){
