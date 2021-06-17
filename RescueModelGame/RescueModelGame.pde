@@ -108,7 +108,7 @@ void setup() {
 void initGame(){
   // Initialize Game
   
-  // FOR GAMERUN1
+  // ---------- FOR GAMERUN1 ----------
   // Initialize Barwidth & THSR
   barWidth = 60;
   
@@ -118,9 +118,11 @@ void initGame(){
     ypos[i] = 0;
   }
   
-  // FOR GAMERUN2
+  // ---------- FOR GAMERUN2 ----------
   // Initialize Player
   player = new Player();
+  
+  // Initialize Gametimer
   gameTimer = GAME_INIT_TIMER;
   
   // Initialize Rocks and their positions
@@ -149,10 +151,17 @@ void initGame(){
     float newY = 180 + floor(random(3)) * ROAD_SIZE;
     
     sales[i] = new Salesman(newX, newY);
+    
+    // NO SALESMAN ALLOWED ON CROSSROAD
+    if(newX == 33 * ROAD_SIZE || newX == 51 * ROAD_SIZE){
+      
+      sales[i].isAlive = false;
+      
+    }
   }
 
   // Initialize Motor and their positions
-   motors = new Motor[2];
+  motors = new Motor[2];
   
   for(int i=0; i < motors.length; i++){
     float newX = (25*i + 20) * ROAD_SIZE;
