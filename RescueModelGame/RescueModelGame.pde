@@ -1,6 +1,7 @@
 PImage thsr0,thsr1,thsr2,thsr3;
+PImage car0, car1, car2;
 PImage road0, road1, road2, road3, road4, road5;
-PImage hand, salesman, motor0, motor1, life, lifeHalf, sky, rock, crossroad;
+PImage hand, salesman, motor0, motor1, life, lifeHalf, sky, rock, crossroad ;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
 PImage restartHovered, restartNormal, startHovered, startNormal;
 
@@ -42,6 +43,7 @@ Player player;
 Rock[] rocks;
 Salesman[] sales;
 Motor[] motors;
+Car[] cars;
 
 
 // Declare an array of x position
@@ -75,6 +77,9 @@ void setup() {
   life = loadImage("img/life.png");
   lifeHalf = loadImage("img/lifeHalf.png");
   crossroad = loadImage("img/crossroad.png");
+  car0 = loadImage("img/car0.png");
+  car1 = loadImage("img/car1.png");
+  car2 = loadImage("img/car2.png");
   
   // Load PImage[][] player
   playerImage = new PImage[PLAYER_STATUS][PLAYER_RUN_POSE];
@@ -146,16 +151,26 @@ void initGame(){
     sales[i] = new Salesman(newX, newY);
   }
 
-// Initialize Motor and their positions
- motors = new Motor[2];
+  // Initialize Motor and their positions
+   motors = new Motor[2];
   
   for(int i=0; i < motors.length; i++){
-    float newX = (8*i + 9) * ROAD_SIZE;
+    float newX = (25*i + 20) * ROAD_SIZE;
     float newY = 180 + floor(random(3)) * ROAD_SIZE;
     
     motors[i] = new Motor(newX, newY);
   }
-}
+
+  // Initialize Car and their positions
+     cars = new Car[3];
+    
+    for(int i=0; i < cars.length; i++){
+      float newX = (20*i + 10) * ROAD_SIZE;
+      float newY = 0;
+      
+      cars[i] = new Car(newX, newY);
+    }
+  }
 
 
 boolean isExist(float positionA, float positionB, float positionC){
@@ -323,11 +338,20 @@ void draw() {
         }
       }
       
-        // Motor
+      // Motor
       for(int i=0; i < motors.length; i++){
         if(motors[i].isAlive){
           motors[i].display();
           motors[i].checkCollision(player);
+        }
+      }
+      
+      // Car
+      for(int i=0; i < cars.length; i++){
+        if(cars[i].isAlive){
+          cars[i].display();
+          cars[i].update();
+          cars[i].checkCollision(player);
         }
       }
 
@@ -392,18 +416,12 @@ void drawRemovingUI(){
   fill(#000000);
   rect(30, 80, 310, 3);
   float depthString = roadSpeed/-30;
-  float RemovingDot = (depthString*2)+30;
+  float RemovingDot = (depthString*1.5)+30;
   fill(#ffcc00);
   circle(RemovingDot, 80, 20);
   if(rightState){
     RemovingDot++;
   }
-  //textSize(56);
-  //textAlign(RIGHT, BOTTOM);
-  //fill(0, 120);
-  //text(depthString, width + 3, height + 3);
-  //fill(#ffcc00);
-  //text(depthString, width, height);
 }
 
 //mm:ss format
