@@ -17,7 +17,7 @@ class Car{
 
     if(isHit(x + roadSpeed, y, w, h, player.x, player.y, player.w, player.h)){
       
-      player.health -= 3;
+      // player.health -= 3;
       isAlive = false;
       
       return true;

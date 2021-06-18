@@ -343,8 +343,11 @@ void draw() {
           
           if(rocks[i].checkCollision(player)){
             
+            if(!player.friendAppear){
+              
+              player.health -= 2;
+            }
             player.hurt();
-            
             
           }else{
             
@@ -381,6 +384,11 @@ void draw() {
         if(cars[i].isAlive){
           
           if(cars[i].checkCollision(player)){
+            
+            if(!player.friendAppear){
+              
+              player.health -= 3;
+            }
             
             player.hurt();
             

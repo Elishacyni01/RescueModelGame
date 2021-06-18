@@ -11,7 +11,7 @@ class Rock{
   boolean checkCollision(Player player){
 
     if(isHit(x + roadSpeed, y, w, h, player.x, player.y, player.w, player.h)){
-      player.health -= 2;
+      
       
       isAlive = false;
       
