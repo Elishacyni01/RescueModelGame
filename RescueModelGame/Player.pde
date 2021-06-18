@@ -12,21 +12,22 @@ class Player{
   
   float speed = 50;
   int health = 10;
-  boolean playerIdleAppear = true;
-  boolean playerCrashAppear = false;
-  boolean playerFriendAppear = false;
-  
+  boolean idleAppear = true;
+  boolean crashAppear = false;
+  boolean friendAppear = false;
+   
   int hurtTimer = 0;
-  int hurtDuration = 15;
-
+  int hurtDuration = 40;
+  
+  
   void update(){
     
-      playerIdleAppear = true;
+      //idleAppear = true;
       
       // switch image between player0&1
       
       if(rightState){
-        playerIdleAppear = false;
+        idleAppear = false;
         if(frame % 10 == 0){
           roadSpeed -= speed;
           // switch image
@@ -54,7 +55,7 @@ class Player{
 
       }
       
-      if(upState){
+      if(upState && hurtTimer == 0){
         if(y == 180){
           y = 180;
         }else{
@@ -63,7 +64,7 @@ class Player{
         upState = false;
       }
       
-      if(downState){
+      if(downState && hurtTimer == 0){
         if(y == height - h){
           y = height - h;
         }else{
@@ -72,9 +73,40 @@ class Player{
         downState = false;
       }
       
-      if(playerIdleAppear == true){
+      if(idleAppear == true){
         image(playerIdle, x, y);
       }
+      
+      if(!rightState && !upState && !downState && hurtTimer == 0){
+        idleAppear = true;
+      }
+    
+    // ---------- PLAYER HURT ----------
+    // println(crashAppear);
+    if(crashAppear == true){
+      // Set the hurtTimer and start to count down
+      //hurtTimer = hurtDuration;
+      
+      if(hurtTimer > 0){
+        // Player is not allowed to make movement
+        rightState = false;
+        upState = false;
+        downState = false;
+        
+        image(playerCrash0, x, y);
+        hurtTimer --;
+        
+      }
+      if(hurtTimer == 0){
+       idleAppear = true;
+       crashAppear = false;
+      }
+    }
+    println(hurtTimer);
+    
+    
+    
+    
     
     frame ++;
   }
@@ -85,84 +117,11 @@ class Player{
     // PLAYER WILL CRASH TO THE GROUND
     // PlayerHealth decrease will be written in their own class.
     
+    idleAppear = false;
+    crashAppear = true;
+    
     // Set the hurtTimer and start to count down
     hurtTimer = hurtDuration;
-    
-    if(hurtTimer == 0){
-      
-      player.update();
-    }
-    
-    // PlayerCrash image
-    
-    if(frame % 15 != 0){
-        
-      // Player is not allowed to make movement
-      rightState = false;
-      upState = false;
-      downState = false;
-        
-        
-      playerIdleAppear = false;
-      playerCrashAppear = true;
-        
-      if(playerCrashAppear == true){
-        image(playerCrash0, x, y);
-      }
-      println(hurtTimer);
-      println(frame);
-    }
-    hurtTimer --;
-    frame ++;
-    
-    
-    
-    
-    /*
-    if(hurtTimer > 0){
-      
-      // Player is not allowed to make movement
-      rightState = false;
-      upState = false;
-      downState = false;
-      
-      
-      playerIdleAppear = false;
-      playerCrashAppear = true;
-      
-      if(playerCrashAppear == true){
-        image(playerCrash0, x, y);
-      }
-      hurtTimer --;
-      println(hurtTimer);
-    }
-    
-    */
-    
-    
-    
-    /*
-    for(int hurtTimer = 0; hurtTimer < hurtDuration; hurtTimer++){
-      
-      playerIdleAppear = false;
-      //playerCrashAppear = true;
-      image(playerCrash0, x, y);
-      println(hurtTimer);
-      
-      frame++;
-    }
-    
-    
-    
-    
-    if(hurtTimer == 0){
-      playerCrashAppear = false;
-    }
-    */
-      
-    if(health == 0){
-      gameState = GAME_LOSE_BROKEN;
-    }
   }
   
   //void touchLine(){
@@ -196,9 +155,9 @@ class Player{
   }
 
   void helpByFriend(){
-    playerIdleAppear = false;
-    playerCrashAppear = false;
-    playerFriendAppear = true;
+    idleAppear = false;
+    crashAppear = false;
+    friendAppear = true;
     
     if(rightState){
       roadSpeed -= 3 * speed;
@@ -223,9 +182,10 @@ class Player{
       downState = false;
     }
       
-    if(playerFriendAppear == true){
+    if(friendAppear == true){
       image(motor1, x, y);
     }
+    
     
     frame ++;
   }

@@ -38,6 +38,7 @@ boolean rightState = false;
 boolean upState = false;
 boolean downState = false;
 
+
 Player player;
 Rock[] rocks;
 Salesman[] sales;
@@ -331,7 +332,7 @@ void draw() {
         image(lifeHalf, 15 + h*70, 15, 50, 40);
         image(life, 15 + f*70, 15, 50, 40);
       }
-      //println(player.health);
+      
       
       // Player
       player.update();
@@ -343,6 +344,7 @@ void draw() {
           if(rocks[i].checkCollision(player)){
             
             player.hurt();
+            
             
           }else{
             
@@ -397,7 +399,13 @@ void draw() {
       gameTimer --;
       if(gameTimer <= 0) gameState = GAME_LOSE_TIME;
       drawTimerUI();  
-    
+      
+      // Health
+      if(player.health <= 0){
+        
+        gameState = GAME_LOSE_BROKEN;
+        
+      }
     break;
 
     case GAME_WIN: 
