@@ -124,8 +124,9 @@ void initGame(){
   // Initialize Player
   player = new Player();
   
-  // Initialize Gametimer
+  // Initialize Gametimer & roadSpeed
   gameTimer = GAME_INIT_TIMER;
+  roadSpeed = 0;
   
   // Initialize Rocks and their positions
   rocks = new Rock[19];

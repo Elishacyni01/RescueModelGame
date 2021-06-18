@@ -1,7 +1,6 @@
 class Player{
   float x, y;
   float w = ROAD_SIZE, h = ROAD_SIZE;
-  int row;
   
   final float PLAYER_INIT_X = 0;
   final float PLAYER_INIT_Y = 280;
@@ -170,6 +169,7 @@ class Player{
   void hurt(){
     // PLAYER WILL CRASH TO THE GROUND
     // PlayerHealth decrease will be written in their own class.
+    
     // If there isn't friend helping, do the crush scene.
     if(!friendAppear){
       idleAppear = false;
@@ -188,27 +188,7 @@ class Player{
   //  }
   //}
   
-  void reduceTime(){
 
-    
-    gameTimer-=360;
-    delay(5000);
-   //try {
-   // Thread.sleep(5000); 
-   // gameTimer-=360;
- 
-   // } catch(InterruptedException ex) {
-      
-   // Thread.currentThread().interrupt();
-   //  }
-
-    //gameTimer-=360;
-    //rightState = false;
-
-    gameTimer -= 360;
-    rightState = false;
-
-  }
 
   void salesInterrupt(){
     // Set the sellTimer and start to count down
@@ -229,6 +209,10 @@ class Player{
   Player(){
     x = PLAYER_INIT_X;
     y = PLAYER_INIT_Y;
-    
+    runningSpeed = 40;
+    indexStatus = 0;
+    indexRunPose = 0;
+    health = 10;
+    frame = 0;
   }
 }
