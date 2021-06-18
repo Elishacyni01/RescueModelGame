@@ -2,7 +2,7 @@ class Car{
   float x, y;
   float w = ROAD_SIZE, h = ROAD_SIZE;
   boolean isAlive;
-  float speed = 3;
+  float speed = 2;
   
   void display(){
     image(car, x + roadSpeed, y, w, h);
@@ -17,7 +17,7 @@ class Car{
 
     if(isHit(x + roadSpeed, y, w, h, player.x, player.y, player.w, player.h)){
       
-      player.health -= 3;
+      // player.health -= 3;
       isAlive = false;
       
       return true;

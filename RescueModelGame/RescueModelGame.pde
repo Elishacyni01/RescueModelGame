@@ -38,6 +38,7 @@ boolean rightState = false;
 boolean upState = false;
 boolean downState = false;
 
+
 Player player;
 Rock[] rocks;
 Salesman[] sales;
@@ -161,7 +162,7 @@ void initGame(){
   motors = new Motor[2];
   
   for(int i=0; i < motors.length; i++){
-    float newX = (25*i + 20) * ROAD_SIZE;
+    float newX = (24*i + 18) * ROAD_SIZE;
     float newY = 180 + floor(random(3)) * ROAD_SIZE;
     
     motors[i] = new Motor(newX, newY);
@@ -331,7 +332,7 @@ void draw() {
         image(lifeHalf, 15 + h*70, 15, 50, 40);
         image(life, 15 + f*70, 15, 50, 40);
       }
-      //println(player.health);
+      
       
       // Player
       player.update();
@@ -342,6 +343,10 @@ void draw() {
           
           if(rocks[i].checkCollision(player)){
             
+            if(!player.friendAppear){
+              
+              player.health -= 2;
+            }
             player.hurt();
             
           }else{
@@ -362,8 +367,15 @@ void draw() {
       // Motor
       for(int i=0; i < motors.length; i++){
         if(motors[i].isAlive){
-          motors[i].display();
-          motors[i].checkCollision(player);
+          
+          if(motors[i].checkCollision(player)){
+            
+            player.helpByFriend();
+            
+          }else{
+            
+            motors[i].display();
+          }
         }
       }
       
@@ -372,6 +384,11 @@ void draw() {
         if(cars[i].isAlive){
           
           if(cars[i].checkCollision(player)){
+            
+            if(!player.friendAppear){
+              
+              player.health -= 3;
+            }
             
             player.hurt();
             
@@ -390,7 +407,13 @@ void draw() {
       gameTimer --;
       if(gameTimer <= 0) gameState = GAME_LOSE_TIME;
       drawTimerUI();  
-    
+      
+      // Health
+      if(player.health <= 0){
+        
+        gameState = GAME_LOSE_BROKEN;
+        
+      }
     break;
 
     case GAME_WIN: 
@@ -452,7 +475,7 @@ void drawRemovingUI(){
   }
 }
 
-//mm:ss format
+// mm:ss format
 void drawTimerUI(){
   textSize(56);
   String timeString = convertFramesToTimeString(gameTimer);

@@ -10,69 +10,136 @@ class Player{
   int indexStatus = 0;
   int indexRunPose = 0;
   
-  float speed = 50;
+  float speed;
+  float runningSpeed = 40;
+  float motorSpeed = 10;
   int health = 10;
-  boolean playerIdleAppear = true;
-  boolean playerCrashAppear = false;
+  boolean idleAppear = true;
+  boolean crashAppear = false;
+  boolean friendAppear = false;
+  
   
   int hurtTimer = 0;
-  int hurtDuration = 15;
-
+  int hurtDuration = 40;
+  int helpTimer = 0;
+  int helpDuration = 100;
+  
   void update(){
-    speed = 50;
-      playerIdleAppear = true;
-      
-      // switch image between player0&1
-      
-      if(rightState){
-        playerIdleAppear = false;
-        if(frame % 10 == 0){
-          roadSpeed -= speed;
-          // switch image
-          switch (indexRunPose) {
-            case 0:
-              indexRunPose = 1;
-              break;
-            case 1:
-              indexRunPose = 0;
-              break;
-          }
-        }
-        if(health <= 6 && health > 3){
-          indexStatus = 1;
-        }
+   if(rightState){
+     idleAppear = false;
+        
+     // ----- IF FRIEND NOT HELPING -----
+     if(!friendAppear){
+       // switch image between player0&1
+       if(frame % 10 == 0){
+         roadSpeed -= speed;
+         speed = runningSpeed;
+         // switch image
+         switch (indexRunPose) {
+           case 0:
+             indexRunPose = 1;
+             break;
+           case 1:
+             indexRunPose = 0;
+             break;
+         }
+       }
+          
+       // Player Status change according to his health
+       if(health <= 6 && health > 3){
+         indexStatus = 1;
+         runningSpeed = 30;
+       }
             
-        if(health<=3 && health>=1){
-          indexStatus = 2;
-        } 
-
-
-        image(playerImage[indexStatus][indexRunPose], x, y);
-
-      }
+       if(health<=3 && health>=1){
+         indexStatus = 2;
+         runningSpeed = 25;
+       } 
+          
+       // Player image
+       image(playerImage[indexStatus][indexRunPose], x, y);
+     }
+        
+     // ----- IF FRIEND HELPING -----
+     if(friendAppear){
+       if(helpTimer > 0){
+         // Speed increase
+         speed = motorSpeed;
+         roadSpeed -= speed;
+            
+         // Player image
+         image(motor1, x, y, ROAD_SIZE, ROAD_SIZE);
+       }
+     }
+   }
       
-      if(upState){
-        if(y == 180){
-          y = 180;
-        }else{
-          y -= h;
-        }
-        upState = false;
-      }
+   if(upState && hurtTimer == 0){
+     if(y == 180){
+       y = 180;
+     }else{
+       y -= h;
+     }
+     upState = false;
+   }
       
-      if(downState){
-        if(y == height - h){
-          y = height - h;
-        }else{
-          y += h;
-        }
-        downState = false;
-      }
+   if(downState && hurtTimer == 0){
+     if(y == height - h){
+       y = height - h;
+     }else{
+       y += h;
+     }
+     downState = false;
+   }
       
-      if(playerIdleAppear == true){
-        image(playerIdle, x, y);
-      }
+      
+   if(!rightState && !upState && !downState && hurtTimer == 0 && helpTimer == 0){
+     idleAppear = true;
+   }
+      
+   if(idleAppear == true){
+     image(playerIdle, x, y);
+   }
     
+   // ---------- PLAYER HURT ----------
+   // println(crashAppear);
+   if(crashAppear == true){
+      
+     if(hurtTimer > 0){
+       // Player is not allowed to make movement
+       rightState = false;
+       upState = false;
+       downState = false;
+        
+       image(playerCrash0, x, y);
+       hurtTimer --;
+        
+     }
+     if(hurtTimer == 0){
+      idleAppear = true;
+      crashAppear = false;
+     }
+   }
+   //println(hurtTimer);
+   
+   // ---------- FRIEND HELPING ----------
+   if(friendAppear == true){
+     
+     if(helpTimer > 0){
+        
+       // Speed increase & ignore every obstacles
+       helpTimer --;
+        
+       // Hide player run Image and use motor instead
+       // Player image
+       image(motor1, x, y, ROAD_SIZE, ROAD_SIZE);
+     }
+      
+     if(helpTimer == 0){
+       friendAppear = false;
+       speed = runningSpeed;
+     }
+   }
+    println(helpTimer);
     frame ++;
   }
   
@@ -81,85 +148,13 @@ class Player{
   void hurt(){
     // PLAYER WILL CRASH TO THE GROUND
     // PlayerHealth decrease will be written in their own class.
-    
-    // Set the hurtTimer and start to count down
-    hurtTimer = hurtDuration;
-    
-    if(hurtTimer == 0){
+    // If there isn't friend helping, do the crush scene.
+    if(!friendAppear){
+      idleAppear = false;
+      crashAppear = true;
       
-      playerIdleAppear = true;
-      playerCrashAppear = false;
-      
-    }
-    
-    // PlayerCrash image
-    for(int i = 0; i < 15;i++){
-      if(hurtTimer > 0){
-        
-        // Player is not allowed to make movement
-        rightState = false;
-        upState = false;
-        downState = false;
-        
-        
-        playerIdleAppear = false;
-        playerCrashAppear = true;
-        
-        if(playerCrashAppear == true){
-          image(playerCrash0, x, y);
-        }
-        println(hurtTimer);
-      }
-      hurtTimer --;
-    }
-    
-    
-    
-    
-    /*
-    if(hurtTimer > 0){
-      
-      // Player is not allowed to make movement
-      rightState = false;
-      upState = false;
-      downState = false;
-      
-      
-      playerIdleAppear = false;
-      playerCrashAppear = true;
-      
-      if(playerCrashAppear == true){
-        image(playerCrash0, x, y);
-      }
-      hurtTimer --;
-      println(hurtTimer);
-    }
-    
-    */
-    
-    
-    
-    /*
-    for(int hurtTimer = 0; hurtTimer < hurtDuration; hurtTimer++){
-      
-      playerIdleAppear = false;
-      //playerCrashAppear = true;
-      image(playerCrash0, x, y);
-      println(hurtTimer);
-      
-      frame++;
-    }
-    
-    
-    
-    
-    if(hurtTimer == 0){
-      playerCrashAppear = false;
-    }
-    */
-      
-    if(health == 0){
-      gameState = GAME_LOSE_BROKEN;
+      // Set the hurtTimer and start to count down
+      hurtTimer = hurtDuration;
     }
   }
   
@@ -193,7 +188,17 @@ class Player{
 
   }
 
+  void helpByFriend(){
+    idleAppear = false;
+    crashAppear = false;
+    friendAppear = true;
     
+    // Set the helpTimer and start to count down
+    helpTimer = helpDuration;
+  }
+  
+  
+  
   Player(){
     x = PLAYER_INIT_X;
     y = PLAYER_INIT_Y;
