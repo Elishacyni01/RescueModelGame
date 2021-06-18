@@ -1,6 +1,6 @@
 PImage thsr0,thsr1,thsr2,thsr3;
 PImage road0, road1, road2, road3, road4, road5;
-PImage hand, salesman, motor0, motor1, life, lifeHalf, sky, rock, crossroad, car;
+PImage hand, salesman, motor0, motor1, life, lifeHalf, sky, rock, crossroad, car, talk;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
 PImage restartHovered, restartNormal, startHovered, startNormal;
 
@@ -67,6 +67,7 @@ void setup() {
   startHovered = loadImage("img/startHovered.png");
   startNormal = loadImage("img/startNormal.png");
   sky = loadImage("img/sky.jpg");
+  talk = loadImage("img/talk.png");
   road0 = loadImage("img/road0.png");
   road1 = loadImage("img/road1.png");
   road2 = loadImage("img/road2.png");
@@ -360,8 +361,12 @@ void draw() {
       for(int i=0; i < sales.length; i++){
         if(sales[i].isAlive){
           sales[i].display();
-          sales[i].checkCollision(player);
         }
+          
+        if(sales[i].checkCollision(player)){
+          player.salesInterrupt();
+          
+        } 
       }
       
       // Motor
