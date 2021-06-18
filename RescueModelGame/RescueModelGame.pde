@@ -2,6 +2,7 @@ PImage thsr0,thsr1,thsr2,thsr3;
 PImage road0, road1, road2, road3, road4, road5;
 PImage hand, salesman, motor0, motor1, life, lifeHalf, sky, rock, crossroad, car;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
+PImage smallplayer, school;
 PImage restartHovered, restartNormal, startHovered, startNormal;
 
 PImage [][] playerImage;
@@ -77,6 +78,8 @@ void setup() {
   lifeHalf = loadImage("img/lifeHalf.png");
   crossroad = loadImage("img/crossroad.png");
   car = loadImage("img/car.png");
+  smallplayer = loadImage("img/smallplayer.png");
+  school = loadImage("img/school.png");
   
   
   // Load PImage[][] player
@@ -464,12 +467,12 @@ boolean isHit(float ax, float ay, float aw, float ah, float bx, float by, float 
 
 void drawRemovingUI(){
   noStroke();
-  fill(#000000);
-  rect(30, 80, 310, 3);
+  fill(#4d1f00);
+  rect(30, 100, 310, 3);
   float depthString = roadSpeed/-30;
   float RemovingDot = (depthString*1.5)+30;
-  fill(#ffcc00);
-  circle(RemovingDot, 80, 20);
+  image(smallplayer,RemovingDot, 100);
+  image(school,310, 70,40,50);
   if(rightState){
     RemovingDot++;
   }
