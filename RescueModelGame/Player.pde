@@ -23,8 +23,11 @@ class Player{
   int hurtDuration = 40;
   int helpTimer = 0;
   int helpDuration = 100;
+  int sellTimer = 0;
+  int sellDuration = 100;
   
   void update(){
+    
    if(rightState){
      idleAppear = false;
         
@@ -73,7 +76,7 @@ class Player{
      }
    }
       
-   if(upState && hurtTimer == 0){
+   if(upState && hurtTimer == 0 && sellTimer == 0){
      if(y == 180){
        y = 180;
      }else{
@@ -82,7 +85,7 @@ class Player{
      upState = false;
    }
       
-   if(downState && hurtTimer == 0){
+   if(downState && hurtTimer == 0 && sellTimer == 0){
      if(y == height - h){
        y = height - h;
      }else{
@@ -139,8 +142,27 @@ class Player{
        speed = runningSpeed;
      }
    }
-    println(helpTimer);
-    frame ++;
+   // println(helpTimer);
+   
+   // ---------- SALESMAN INTERRUPT ----------
+   if(sellTimer > 0){
+     
+     // Player is not allowed to make movement
+     rightState = false;
+     upState = false;
+     downState = false;
+     
+     // Talking
+     image(talk, x + 20, y - 50);
+     image(salesman, x + ROAD_SIZE, y);
+     sellTimer --;
+   }
+   if(sellTimer == 0){
+     
+   }
+   println(sellTimer);
+   
+   frame ++;
   }
   
 
@@ -186,6 +208,11 @@ class Player{
     gameTimer -= 360;
     rightState = false;
 
+  }
+
+  void salesInterrupt(){
+    // Set the sellTimer and start to count down
+    sellTimer = sellDuration;
   }
 
   void helpByFriend(){

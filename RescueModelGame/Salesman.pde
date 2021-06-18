@@ -6,14 +6,17 @@ class Salesman{
   void display(){
     image(salesman, x + roadSpeed, y, w, h);
   }
+    
   
-  void checkCollision(Player player){
+  boolean checkCollision(Player player){
 
-    if(isHit(x+ roadSpeed, y, w, h, player.x, player.y, player.w, player.h)){
-
-      // stop player for some time
-     player.reduceTime();
-     isAlive = false;
+    if(isHit(x + roadSpeed, y, w, h, player.x, player.y, player.w, player.h) && isAlive){
+      
+      isAlive = false;
+      
+      return true;
+    }else{
+      return false;
     }
   }
   
