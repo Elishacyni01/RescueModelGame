@@ -74,7 +74,9 @@ class Player{
          roadSpeed -= speed;
             
          // Player image
-         image(motor1, x, y, ROAD_SIZE, ROAD_SIZE);
+         image(motor1, x, y -20, ROAD_SIZE, 120);
+         
+         helpTimer --;
        }
      }
    }
@@ -130,16 +132,6 @@ class Player{
    // ---------- FRIEND HELPING ----------
    if(friendAppear == true){
      
-     if(helpTimer > 0){
-        
-       // Speed increase & ignore every obstacles
-       helpTimer --;
-        
-       // Hide player run Image and use motor instead
-       // Player image
-       image(motor1, x, y, ROAD_SIZE, ROAD_SIZE);
-     }
-      
      if(helpTimer == 0){
        friendAppear = false;
        speed = runningSpeed;
