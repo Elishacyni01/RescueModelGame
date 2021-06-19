@@ -205,7 +205,7 @@ class Player{
      
      endingTimer--;
    }
-   println(endingTimer);
+   // println(endingTimer);
    
    
    frame ++;

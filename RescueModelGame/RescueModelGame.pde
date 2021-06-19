@@ -11,7 +11,7 @@ PImage [] playerIdle;
 PFont font;
 
 final int GAME_START = 0, GAME_RUN1 = 1, GAME_RUN2 = 2, GAME_WIN = 3, GAME_LOSE_TIME = 4, GAME_LOSE_BROKEN = 5;
-int gameState = 2;
+int gameState = 0;
 
 final int START_BUTTON_WIDTH = 200;
 final int START_BUTTON_HEIGHT = 100;
@@ -320,7 +320,7 @@ void draw() {
       noStroke();
       fill(#ffffff);
       rect(roadSpeed + endingLine, 180, 20, 300);
-      //player.touchLine();
+      
      
       // Crossroad
       for(int i=0; i < 3; i++){
@@ -431,7 +431,7 @@ void draw() {
       }
       
      // ENDING LINE
-     println(roadSpeed);
+     //println(roadSpeed);
      if(roadSpeed <= - 6000){
        
        roadSpeed = -6000;
