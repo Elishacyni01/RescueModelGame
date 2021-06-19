@@ -448,7 +448,7 @@ void draw() {
     break;
 
     case GAME_WIN: 
-      image(gamewin, 0, 0);
+      image(gamewin, 0, 0, width, height);
       restart();
       initGame();
     break;
