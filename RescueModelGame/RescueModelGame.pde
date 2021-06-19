@@ -2,7 +2,7 @@ PImage thsr0,thsr1,thsr2,thsr3;
 PImage road0, road1, road2, road3, road4, road5;
 PImage hand, salesman, motor0, motor1, life, lifeHalf, sky, rock, crossroad, car, talk;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
-PImage smallplayer, school, house0, house1, tree;
+PImage smallplayer, school, house0, house1, tree, end;
 PImage restartHovered, restartNormal, startHovered, startNormal;
 
 PImage [][] playerImage;
@@ -101,6 +101,7 @@ void setup() {
   house0 = loadImage("img/house0.png");
   house1 = loadImage("img/house1.png");
   tree = loadImage("img/tree.png");
+  end = loadImage("img/end.png");
   
   
   // Load PImage[][] player
@@ -360,6 +361,8 @@ void draw() {
       fill(#ffffff);
       rect(roadSpeed + endingLine, 180, 20, 300);
       
+      // School
+      image(end, endingLine + roadSpeed + 3 * ROAD_SIZE, 80);
      
       // Crossroad
       for(int i=0; i < 3; i++){
