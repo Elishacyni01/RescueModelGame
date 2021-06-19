@@ -20,7 +20,6 @@ final int START_BUTTON_Y = 300;
 final int RESTART_BUTTON_X = 200;
 final int RESTART_BUTTON_Y = 350;
 
-
 final int PLAYER_RUN_POSE = 2;
 final int PLAYER_STATUS = 3;
 int playerRow;
@@ -40,7 +39,6 @@ boolean rightState = false;
 boolean upState = false;
 boolean downState = false;
 
-
 Player player;
 Rock[] rocks;
 Salesman[] sales;
@@ -51,9 +49,25 @@ Car[] cars;
 int[] xpos = new int[2];
 int[] ypos = new int[2];
 
+import ddf.minim.*;
+
+Minim minim;
+AudioSample buttom;
+AudioSample rub;
+AudioSample crash;
+AudioPlayer timeup;
+
 void setup() {
   size(640, 480, P2D);
   frameRate(60);
+  minim = new Minim(this);
+  
+  // load mp3 from the data folder
+  buttom = minim.loadSample( "buttom01.mp3", 128);
+  rub = minim.loadSample( "rub.mp3", 128);
+  crash = minim.loadSample( "crash.mp3", 128);
+  timeup = minim.loadFile( "timeup.mp3", 256);
+  
   hand = loadImage("img/hand.png");
   rock = loadImage("img/rock.png");
   salesman = loadImage("img/salesman.png");
@@ -222,6 +236,7 @@ void draw() {
   
         image(startHovered, START_BUTTON_X, START_BUTTON_Y);
         if(mousePressed){
+          buttom.trigger();
           gameState = GAME_RUN1;
           mousePressed = false;
         }
@@ -455,6 +470,7 @@ void draw() {
         
     case GAME_LOSE_TIME: // time over
       image(gamelosetime, 0, 0);
+      timeup.play();
       restart();
       initGame();
     break;
@@ -475,6 +491,7 @@ void restart(){
 
       image(restartHovered, RESTART_BUTTON_X, RESTART_BUTTON_Y);
       if(mousePressed){
+        buttom.trigger();
         gameState = GAME_START;
         mousePressed = false;
       }
