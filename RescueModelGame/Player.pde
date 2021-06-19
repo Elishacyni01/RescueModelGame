@@ -132,6 +132,10 @@ class Player{
    // ---------- FRIEND HELPING ----------
    if(friendAppear == true){
      
+     if(helpTimer > 0){
+       // Player image
+       image(motor1, x, y -20, ROAD_SIZE, 120);
+     }
      if(helpTimer == 0){
        friendAppear = false;
        speed = runningSpeed;
@@ -216,6 +220,8 @@ class Player{
       
       // Set the hurtTimer and start to count down
       hurtTimer = hurtDuration;
+      
+      crash.trigger();
     }
   }
   
