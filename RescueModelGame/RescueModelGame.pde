@@ -335,7 +335,7 @@ void draw() {
       image(sky, 0, 0);
       
       // Road
-      for(int i=0; i < 64; i++){
+      for(int i=0; i < 67; i++){
         image(road0, roadSpeed + i * ROAD_SIZE, 180);
         image(road1, roadSpeed + i * ROAD_SIZE, 280);
         image(road2, roadSpeed + i * ROAD_SIZE, 380);
@@ -362,7 +362,7 @@ void draw() {
       rect(roadSpeed + endingLine, 180, 20, 300);
       
       // School
-      image(end, endingLine + roadSpeed + 3 * ROAD_SIZE, 80);
+      image(end, endingLine + roadSpeed + 3 * ROAD_SIZE - 50, 0, 400, 250);
      
       // Crossroad
       for(int i=0; i < 3; i++){
@@ -606,6 +606,9 @@ void keyPressed(){
   }else{
     if(key=='t'){
       gameTimer -= 180;
+    }
+    if(key=='k'){
+      gameTimer += 180;
     }
     if(key=='r'){
       player.hurt();
