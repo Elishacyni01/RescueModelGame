@@ -6,7 +6,8 @@ PImage smallplayer, school;
 PImage restartHovered, restartNormal, startHovered, startNormal;
 
 PImage [][] playerImage;
-PImage playerCrash0, playerIdle;
+PImage playerCrash0;
+PImage [] playerIdle;
 PFont font;
 
 final int GAME_START = 0, GAME_RUN1 = 1, GAME_RUN2 = 2, GAME_WIN = 3, GAME_LOSE_TIME = 4, GAME_LOSE_BROKEN = 5;
@@ -91,9 +92,14 @@ void setup() {
     }
   }
   
+  // Load PImage[] playerIdle
+  playerIdle = new PImage[PLAYER_STATUS];
+  for(int i = 0; i < playerIdle.length; i++){
+    playerIdle[i] = loadImage("img/players/playerIdle" + i + ".png");
+  }
+  
   // Player loadImage
   playerCrash0 = loadImage("img/players/playerCrash0.png");
-  playerIdle = loadImage("img/players/playerIdle.png");
   
   // THSR loadImage
   thsr0 = loadImage("img/thsr0.png");

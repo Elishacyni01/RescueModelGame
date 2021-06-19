@@ -28,7 +28,6 @@ class Player{
   int sellTimer = 0;
   int sellDuration = 100;
   
- 
   
   void update(){
     
@@ -104,7 +103,7 @@ class Player{
    }
       
    if(idleAppear == true){
-     image(playerIdle, x, y);
+     image(playerIdle[indexStatus], x, y);
    }
     
    // ---------- PLAYER HURT ----------
