@@ -17,6 +17,9 @@ class Player{
   boolean crashAppear = false;
   boolean friendAppear = false;
   
+  boolean endingRun = false;
+  int endingTimer = 0;
+  int endingDuration = 1000;
   
   int hurtTimer = 0;
   int hurtDuration = 40;
@@ -24,6 +27,8 @@ class Player{
   int helpDuration = 100;
   int sellTimer = 0;
   int sellDuration = 100;
+  
+ 
   
   void update(){
     
@@ -94,7 +99,7 @@ class Player{
    }
       
       
-   if(!rightState && !upState && !downState && hurtTimer == 0 && helpTimer == 0){
+   if(!rightState && !upState && !downState && hurtTimer == 0 && helpTimer == 0 && endingTimer == 0){
      idleAppear = true;
    }
       
@@ -159,7 +164,50 @@ class Player{
    if(sellTimer == 0){
      
    }
-   println(sellTimer);
+   // println(sellTimer);
+   
+   // ---------- ENDING RUN ----------
+   if(endingTimer > 0){
+     // Player is not allowed to make movement
+     idleAppear = false;
+     rightState = false;
+     upState = false;
+     downState = false;
+     
+     // Automatically moving to right part
+     x += 2;
+     
+     // switch image between player0&1
+     if(frame % 10 == 0){
+       roadSpeed -= speed;
+       speed = runningSpeed;
+       // switch image
+       switch (indexRunPose) {
+         case 0:
+           indexRunPose = 1;
+           break;
+         case 1:
+           indexRunPose = 0;
+           break;
+       }
+     }
+         
+     // Player Status change according to his health
+     if(health <= 6 && health > 3){
+       indexStatus = 1;
+     }
+            
+     if(health<=3 && health>=1){
+       indexStatus = 2;
+     } 
+          
+     // Player image
+     image(playerImage[indexStatus][indexRunPose], x, y);
+     
+     endingTimer--;
+   }
+   println(endingTimer);
+   
    
    frame ++;
   }
@@ -180,16 +228,6 @@ class Player{
     }
   }
   
-  //void touchLine(){
-   
-  //  if(player.x > 30){
-  //  x+=speed;
-  //  rightState = false;
-  //  }
-  //}
-  
-
-
   void salesInterrupt(){
     // Set the sellTimer and start to count down
     sellTimer = sellDuration;
@@ -204,7 +242,10 @@ class Player{
     helpTimer = helpDuration;
   }
   
-  
+  void touchLine(){
+    // Set the endingTimer and start to count down
+    endingTimer = endingDuration;
+  }
   
   Player(){
     x = PLAYER_INIT_X;
@@ -214,5 +255,7 @@ class Player{
     indexRunPose = 0;
     health = 10;
     frame = 0;
+    endingRun = false;
+    endingTimer = 0;
   }
 }

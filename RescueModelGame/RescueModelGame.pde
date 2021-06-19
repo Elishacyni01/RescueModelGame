@@ -313,7 +313,7 @@ void draw() {
       //ending line
       noStroke();
       fill(#ffffff);
-      rect(roadSpeed +endingLine, 180, 20, 300);
+      rect(roadSpeed + endingLine, 180, 20, 300);
       //player.touchLine();
      
       // Crossroad
@@ -423,6 +423,22 @@ void draw() {
         gameState = GAME_LOSE_BROKEN;
         
       }
+      
+     // ENDING LINE
+     println(roadSpeed);
+     if(roadSpeed <= - 6000){
+       
+       roadSpeed = -6000;
+       player.speed = 0;
+       
+       // Automatically run to school
+       player.touchLine();
+     }
+     
+     if(player.x >= 300){
+       gameState = GAME_WIN;
+     }
+     
     break;
 
     case GAME_WIN: 
@@ -475,8 +491,10 @@ void drawRemovingUI(){
   noStroke();
   fill(#4d1f00);
   rect(30, 100, 310, 3);
+  
   float depthString = roadSpeed/-30;
   float RemovingDot = (depthString*1.5)+30;
+  
   image(smallplayer,RemovingDot, 100);
   image(school,310, 70,40,50);
   if(rightState){
