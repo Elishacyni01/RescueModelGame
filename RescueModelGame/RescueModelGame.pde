@@ -11,7 +11,7 @@ PImage [] playerIdle;
 PFont font;
 
 final int GAME_START = 0, GAME_RUN1 = 1, GAME_RUN2 = 2, GAME_WIN = 3, GAME_LOSE_TIME = 4, GAME_LOSE_BROKEN = 5;
-int gameState = 2;
+int gameState = 1;
 
 final int START_BUTTON_WIDTH = 200;
 final int START_BUTTON_HEIGHT = 100;
@@ -56,6 +56,7 @@ AudioSample buttom;
 AudioSample rub;
 AudioSample crash;
 AudioPlayer timeup;
+AudioPlayer backmusic;
 
 void setup() {
   size(640, 480, P2D);
@@ -67,6 +68,7 @@ void setup() {
   rub = minim.loadSample( "rub.mp3", 128);
   crash = minim.loadSample( "crash.mp3", 128);
   timeup = minim.loadFile( "timeup.mp3", 256);
+  backmusic = minim.loadFile( "backmusic.mp3", 256);
   
   hand = loadImage("img/hand.png");
   rock = loadImage("img/rock.png");
@@ -254,6 +256,8 @@ void draw() {
         
     case GAME_RUN1:  // Rubbing model
     
+      backmusic.play();
+    
       image(gamerun1, 0, 0);
       
       // THSR
@@ -323,6 +327,8 @@ void draw() {
     break;
     
     case GAME_RUN2: // Start run
+    
+     backmusic.play();
     
       // Background
       image(sky, 0, 0);
