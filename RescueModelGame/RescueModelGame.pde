@@ -2,7 +2,7 @@ PImage thsr0,thsr1,thsr2,thsr3;
 PImage road0, road1, road2, road3, road4, road5;
 PImage hand, salesman, motor0, motor1, life, lifeHalf, sky, rock, crossroad, car, talk;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
-PImage smallplayer, school;
+PImage smallplayer, school, house0, house1, tree;
 PImage restartHovered, restartNormal, startHovered, startNormal;
 
 PImage [][] playerImage;
@@ -11,7 +11,7 @@ PImage [] playerIdle;
 PFont font;
 
 final int GAME_START = 0, GAME_RUN1 = 1, GAME_RUN2 = 2, GAME_WIN = 3, GAME_LOSE_TIME = 4, GAME_LOSE_BROKEN = 5;
-int gameState = 0;
+int gameState = 2;
 
 final int START_BUTTON_WIDTH = 200;
 final int START_BUTTON_HEIGHT = 100;
@@ -96,6 +96,9 @@ void setup() {
   car = loadImage("img/car.png");
   smallplayer = loadImage("img/smallplayer.png");
   school = loadImage("img/school.png");
+  house0 = loadImage("img/house0.png");
+  house1 = loadImage("img/house1.png");
+  tree = loadImage("img/tree.png");
   
   
   // Load PImage[][] player
@@ -331,6 +334,21 @@ void draw() {
         image(road2, roadSpeed + i * ROAD_SIZE, 380);
       }
       
+      // Tree & House
+      for(int i=0; i < 3; i++){
+        image(house1, roadSpeed + (20 * i + 1.8) * ROAD_SIZE, 100, 1.7 * ROAD_SIZE, 0.8 * ROAD_SIZE);
+        image(house0, roadSpeed + (20 * i + 3.5) * ROAD_SIZE, 80, 1.7 * ROAD_SIZE, ROAD_SIZE);
+        image(house1, roadSpeed + (20 * i + 6.8) * ROAD_SIZE, 100, 1.7 * ROAD_SIZE, 0.8 * ROAD_SIZE);
+        image(tree, roadSpeed + 20 * i * ROAD_SIZE, 80, 200, ROAD_SIZE);
+        image(tree, roadSpeed + (20 * i + 5) * ROAD_SIZE, 80, 200, ROAD_SIZE);
+        image(tree, roadSpeed + (20 * i + 8) * ROAD_SIZE, 80, 200, ROAD_SIZE);
+      }
+      for(int i=0; i < 3; i++){
+        image(house0, roadSpeed + (20 * i + 16) * ROAD_SIZE, 80, 1.7 * ROAD_SIZE, ROAD_SIZE);
+        image(tree, roadSpeed + (20 * i + 14) * ROAD_SIZE, 80, 200, ROAD_SIZE);
+        image(tree, roadSpeed + (20 * i + 18) * ROAD_SIZE, 80, 200, ROAD_SIZE);
+      }
+        
       //ending line
       noStroke();
       fill(#ffffff);
