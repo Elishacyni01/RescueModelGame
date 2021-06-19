@@ -2,7 +2,7 @@ PImage thsr0,thsr1,thsr2,thsr3;
 PImage road0, road1, road2, road3, road4, road5;
 PImage hand, salesman, motor0, motor1, life, lifeHalf, sky, rock, crossroad, car, talk;
 PImage gamestart, gamerun1, gamerun2, gamewin, gamelosetime, gamelosebroken;
-PImage smallplayer, school, house0, house1, tree, end;
+PImage smallplayer, school, house0, house1, tree, end, end1, endroad;
 PImage restartHovered, restartNormal, startHovered, startNormal;
 
 PImage [][] playerImage;
@@ -11,7 +11,7 @@ PImage [] playerIdle;
 PFont font;
 
 final int GAME_START = 0, GAME_RUN1 = 1, GAME_RUN2 = 2, GAME_WIN = 3, GAME_LOSE_TIME = 4, GAME_LOSE_BROKEN = 5;
-int gameState = 1;
+int gameState = 5;
 
 final int START_BUTTON_WIDTH = 200;
 final int START_BUTTON_HEIGHT = 100;
@@ -55,6 +55,10 @@ Minim minim;
 AudioSample buttom;
 AudioSample rub;
 AudioSample crash;
+AudioSample motor;
+AudioSample woman;
+AudioPlayer yeah;
+AudioPlayer lose;
 AudioPlayer timeup;
 AudioPlayer backmusic;
 
@@ -67,8 +71,12 @@ void setup() {
   buttom = minim.loadSample( "buttom01.mp3", 128);
   rub = minim.loadSample( "rub.mp3", 128);
   crash = minim.loadSample( "crash.mp3", 128);
+  motor = minim.loadSample( "motor.mp3", 256);
+  woman = minim.loadSample( "woman.mp3", 256);
+  yeah = minim.loadFile( "yeah.mp3", 256);
   timeup = minim.loadFile( "timeup.mp3", 256);
   backmusic = minim.loadFile( "backmusic.mp3", 256);
+  lose = minim.loadFile( "lose.mp3", 256);
   
   hand = loadImage("img/hand.png");
   rock = loadImage("img/rock.png");
@@ -102,7 +110,8 @@ void setup() {
   house1 = loadImage("img/house1.png");
   tree = loadImage("img/tree.png");
   end = loadImage("img/end.png");
-  
+  end1 = loadImage("img/end1.png");
+  endroad = loadImage("img/endroad.jpg");
   
   // Load PImage[][] player
   playerImage = new PImage[PLAYER_STATUS][PLAYER_RUN_POSE];
@@ -355,6 +364,8 @@ void draw() {
         image(tree, roadSpeed + (20 * i + 14) * ROAD_SIZE, 80, 200, ROAD_SIZE);
         image(tree, roadSpeed + (20 * i + 18) * ROAD_SIZE, 80, 200, ROAD_SIZE);
       }
+      image(tree, roadSpeed + 60 * ROAD_SIZE, 80, 200, ROAD_SIZE);
+      
         
       //ending line
       noStroke();
@@ -362,8 +373,13 @@ void draw() {
       rect(roadSpeed + endingLine, 180, 20, 300);
       
       // School
-      image(end, endingLine + roadSpeed + 3 * ROAD_SIZE - 50, 0, 400, 250);
-     
+      for(int i=0; i<4; i++){
+        for(int j=0; j<3; j++){
+          image(endroad, roadSpeed + (62.5+i) * ROAD_SIZE, 180 + j * ROAD_SIZE);
+        }
+      }
+      image(end1, endingLine + roadSpeed + 3 * ROAD_SIZE - 50, 0, 400, 250);
+      
       // Crossroad
       for(int i=0; i < 3; i++){
         image(crossroad, roadSpeed + (10 + 20*i) * ROAD_SIZE, 180);
@@ -467,7 +483,7 @@ void draw() {
       
       // Health
       if(player.health <= 0){
-        
+        lose.play();
         gameState = GAME_LOSE_BROKEN;
         
       }
@@ -484,6 +500,7 @@ void draw() {
      }
      
      if(player.x >= 300){
+       yeah.play();
        gameState = GAME_WIN;
      }
      
@@ -491,6 +508,7 @@ void draw() {
 
     case GAME_WIN: 
       image(gamewin, 0, 0, width, height);
+      
       restart();
       initGame();
     break;
@@ -504,6 +522,7 @@ void draw() {
         
     case GAME_LOSE_BROKEN: //model broken
       image(gamelosebroken, 0, 0);
+      backmusic.pause();
       restart();
       initGame();
     break;

@@ -228,6 +228,9 @@ class Player{
   void salesInterrupt(){
     // Set the sellTimer and start to count down
     sellTimer = sellDuration;
+    
+    // sales sound
+    woman.trigger();
   }
 
   void helpByFriend(){
@@ -237,6 +240,9 @@ class Player{
     
     // Set the helpTimer and start to count down
     helpTimer = helpDuration;
+    
+    // motor sound
+    motor.trigger();
   }
   
   void touchLine(){
